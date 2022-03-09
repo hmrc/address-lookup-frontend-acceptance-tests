@@ -124,7 +124,8 @@ class ManualAddressEntrySpec extends BaseSpec {
       assertThat(EditAddressPage().addressLineTwoField.value).isEqualTo("")
       assertThat(EditAddressPage().townField.value).isEqualTo("")
       assertThat(EditAddressPage().postcodeField.value).isEqualTo("")
-      assertThat(EditAddressPage().countryFieldIsDisplayed()).isFalse
+      assertThat(EditAddressPage().countryFieldIsDisplayed()).isTrue
+      assertThat(EditAddressPage().countryFieldIsEnabled()).isFalse
 
       When("I click on the back link")
       EditAddressPage().clickBackLink()
