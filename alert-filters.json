@@ -1,0 +1,26 @@
+{
+  "add": [
+    {
+      "reason": "There is no sensitive information being disclosed, a custom error screen is displayed",
+      "contextId": 1,
+      "url": "http://localhost:9028/lookup-address/destroySession?timeoutUrl=http://www.google.co.uk",
+      "ruleId": 90022,
+      "urlIsRegex": "false",
+      "newLevel": -1
+    },
+    {
+      "reason": "Expected, this is the way metrics work on the platform",
+      "contextId": 1,
+      "url": "http:\/\/localhost:9028\/admin\/metrics.*",
+      "ruleId": 2,
+      "urlIsRegex": "true"
+    },
+    {
+      "reason": "Suppress false positive PII errors on metrics endpoint",
+      "contextId": 1,
+      "url": "http:\/\/localhost:9028\/admin\/metrics.*",
+      "ruleId": 10062,
+      "urlIsRegex": "true"
+    }
+  ]
+}
