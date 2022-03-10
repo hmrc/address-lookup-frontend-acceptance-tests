@@ -21,7 +21,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions.titleIs
 case class EditAddressPage() extends BasePage {
 
   private lazy val nextButton: Option[Element] = find(id("continue"))
-  private lazy val countryField: Option[Element] = find(id("countryCode"))
+  private lazy val countryField: Option[Element] = find(id("countryName"))
 
   lazy val organisationNameField: TextField = textField(id("organisation"))
   lazy val addressLineOneField: TextField = textField(id("line1"))
