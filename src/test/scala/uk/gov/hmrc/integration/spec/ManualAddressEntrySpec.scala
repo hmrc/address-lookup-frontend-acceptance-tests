@@ -124,13 +124,14 @@ class ManualAddressEntrySpec extends BaseSpec {
       assertThat(EditAddressPage().addressLineTwoField.value).isEqualTo("")
       assertThat(EditAddressPage().townField.value).isEqualTo("")
       assertThat(EditAddressPage().postcodeField.value).isEqualTo("")
-      assertThat(EditAddressPage().countryFieldIsDisplayed()).isFalse
+      assertThat(EditAddressPage().countryFieldIsDisplayed()).isTrue
+      assertThat(EditAddressPage().countryFieldIsEnabled()).isFalse
 
       When("I click on the back link")
       EditAddressPage().clickBackLink()
 
       Then("I should be taken back to the Select Address page")
-      assertThat(AddressLookUpPage().isOnPage()).isTrue
+      assertThat(CountrySelectorPage().isOnPage()).isTrue
     }
 
     Scenario("Check manual address entry page defaults - UK mode") {
