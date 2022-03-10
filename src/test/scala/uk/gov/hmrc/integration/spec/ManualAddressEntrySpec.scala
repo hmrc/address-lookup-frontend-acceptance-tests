@@ -131,7 +131,7 @@ class ManualAddressEntrySpec extends BaseSpec {
       EditAddressPage().clickBackLink()
 
       Then("I should be taken back to the Select Address page")
-      assertThat(AddressLookUpPage().isOnPage()).isTrue
+      assertThat(CountrySelectorPage().isOnPage()).isTrue
     }
 
     Scenario("Check manual address entry page defaults - UK mode") {
