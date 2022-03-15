@@ -19,7 +19,7 @@ package uk.gov.hmrc.integration.spec
 import org.assertj.core.api.Assertions.assertThat
 import uk.gov.hmrc.integration.models.confirmed.{Address, Country}
 import uk.gov.hmrc.integration.models.init.{JourneyConfig, JourneyOptions}
-import uk.gov.hmrc.integration.pages.{AddressLookUpPage, ConfirmAddressPage, EditAddressPage, CountrySelectorPage}
+import uk.gov.hmrc.integration.pages.{AddressLookUpPage, ConfirmAddressPage, CountrySelectorPage, EditAddressPage}
 
 import scala.util.Random
 
@@ -156,6 +156,36 @@ class ManualAddressEntrySpec extends BaseSpec {
       Then("I should be taken back to the Select Address page")
       assertThat(AddressLookUpPage().isOnPage()).isTrue
     }
+
+    Scenario("Can submit a manually entered UK address in International mode") {
+      Given("I have manually entered a valid UK address")
+      val startPage = initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
+      val clientId = getClientID(startPage)
+      go to startPage
+      When("I go to the manual entry page")
+      CountrySelectorPage()
+        .selectCountry("United Kingdom")
+        .clickNext()
+
+      AddressLookUpPage().clickManualEntry()
+      EditAddressPage().enterAddressLineOne(UK_ADDRESS.lines.head)
+        .enterTown(UK_ADDRESS.lines(1))
+        .enterPostcode(UK_ADDRESS.postcode.get)
+
+      When("I confirm my address")
+
+      EditAddressPage().clickNext()
+      ConfirmAddressPage().confirmAddress()
+
+      Then("The calling service is able to collect the address I confirmed via an API call")
+
+      val confirmedAddress = getConfirmedAddress(clientId)
+
+      assertThat(confirmedAddress.auditRef).isEqualTo(clientId)
+      assertThat(confirmedAddress.id).isEqualTo(None)
+      assertThat(confirmedAddress.address).isEqualTo(UK_ADDRESS)
+    }
+
   }
 
   Feature("Invalid") {
