@@ -104,8 +104,8 @@ class AccessibilitySpec extends BaseSpec {
     AddressLookUpPage().clickFindAddress()
 
     Then("I should see an 'Enter postcode' error at the top of the page")
-    assertErrorMessage("postcode", Some("Enter UK postcode"))
-    assertErrorSummaryLink("postcode", Some("Enter UK postcode"))
+    assertErrorMessage("postcode", Some("Enter a UK postcode"))
+    assertErrorSummaryLink("postcode", Some("Enter a UK postcode"))
     assertErrorMessageSummaryCountIsEqualTo(1)
     AddressLookUpPage().clickManualEntry()
 

@@ -36,9 +36,9 @@ class SelectAddressSpec extends BaseSpec {
       ChooseAddressPage().clickContinue()
 
       Then("I should see an 'Error Summary' at the top of the page")
-      assertErrorSummaryLink("addressId", Some("Select the property for the address"))
+      assertErrorSummaryLink("addressId", Some("Select an address"))
       assertErrorMessageSummaryCountIsEqualTo(1)
-      assertChooseAddressErrorMessage("addressId", Some("Select the property for the address"))
+      assertChooseAddressErrorMessage("addressId", Some("Select an address"))
 
       And("I should see an 'Error: ' prefix in the title element")
       assertThat(ChooseAddressPage().pageTitle).startsWith("Error: ")

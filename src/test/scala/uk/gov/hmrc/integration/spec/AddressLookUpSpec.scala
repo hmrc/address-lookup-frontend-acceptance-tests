@@ -46,8 +46,8 @@ class AddressLookUpSpec extends BaseSpec {
       AddressLookUpPage().clickFindAddress()
 
       Then("I should see an 'Error Summary' at the top of the page")
-      assertErrorMessage("postcode", Some("Enter UK postcode"))
-      assertErrorSummaryLink("postcode", Some("Enter UK postcode"))
+      assertErrorMessage("postcode", Some("Enter a UK postcode"))
+      assertErrorSummaryLink("postcode", Some("Enter a UK postcode"))
       assertErrorMessageSummaryCountIsEqualTo(1)
 
       And("I should see an 'Error: ' prefix in the title element")
