@@ -29,7 +29,7 @@ case class AddressLookUpPage() extends BasePage {
   private lazy val enterAddressManually: IdQuery = id("manualAddress")
 
   override def isOnPage(ukMode: Boolean = true): Boolean = {
-    webDriverWillWait.until(titleIs(if (ukMode) "Find UK address" else "Find address"))
+    webDriverWillWait.until(titleIs(if (ukMode) "Find your UK address" else "Find your address"))
   }
 
   def clickFindAddress(): AddressLookUpPage = {
