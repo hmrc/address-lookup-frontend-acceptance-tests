@@ -29,7 +29,7 @@ case class ChooseAddressPage() extends BasePage {
   lazy val firstAddress: IdQuery = id("addressId")
 
   override def isOnPage(ukMode: Boolean = false): Boolean = {
-    webDriverWillWait.until(titleIs("Choose address"))
+    webDriverWillWait.until(titleIs("Choose your address"))
   }
 
   def getAddressesCount(postcode: String): Int = {

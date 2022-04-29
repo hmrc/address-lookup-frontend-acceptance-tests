@@ -28,7 +28,7 @@ case class CountrySelectorPage() extends BasePage {
   lazy val countryAutoCompleteField: IdQuery = id("countryCode__option--0")
 
   override def isOnPage(ukMode: Boolean = false): Boolean = {
-    webDriverWillWait.until(titleIs("Select country"))
+    webDriverWillWait.until(titleIs("Select your country"))
   }
 
   def selectCountry(country: String): CountrySelectorPage = {
