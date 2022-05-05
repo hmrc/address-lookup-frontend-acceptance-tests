@@ -186,6 +186,34 @@ class ManualAddressEntrySpec extends BaseSpec {
       assertThat(confirmedAddress.address).isEqualTo(UK_ADDRESS)
     }
 
+    Scenario("Can change country after manually entering an international address") {
+      Given("I have manually entered a valid international address")
+      val startPage = initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
+      go to startPage
+      CountrySelectorPage().selectCountry(INT_ADDRESS.country.name)
+        .clickNext()
+      EditAddressPage().enterAddressLineOne(INT_ADDRESS.lines.head)
+        .enterTown(INT_ADDRESS.lines(1))
+        .enterPostcode(INT_ADDRESS.postcode.get)
+
+      When("I reach the confirm my address screen ")
+
+      EditAddressPage().clickNext()
+
+
+      Then("I can go back and change the country I have selected")
+
+      ConfirmAddressPage().clickBackLink()
+      EditAddressPage().clickBackLink()
+      CountrySelectorPage().selectCountry("Bangladesh")
+
+      And("the newly selected country is displayed")
+
+      EditAddressPage().clickNext()
+
+      assertThat(EditAddressPage().countryFieldValue()).isEqualTo("Bangladesh")
+    }
+
   }
 
   Feature("Invalid") {
