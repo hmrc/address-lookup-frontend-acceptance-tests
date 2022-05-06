@@ -83,6 +83,13 @@ case class EditAddressPage() extends BasePage {
     countryField.get.isEnabled
   }
 
+  def countryFieldValue(): String = {
+    if (countryField.isEmpty) {
+      return ""
+    }
+    countryField.get.attribute("value").get
+  }
+
   def clickNext(): Unit = {
     click on nextButton.get
   }
