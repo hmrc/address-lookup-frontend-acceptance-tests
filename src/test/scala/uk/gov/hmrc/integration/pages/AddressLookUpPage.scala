@@ -21,7 +21,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions._
 case class AddressLookUpPage() extends BasePage {
 
   val invalidPostcodeMessage: Option[String] = Some("Enter a real UK Postcode e.g. AA1 1AA")
-  val tooManyAddressesFoundForPostcodeMessage: String = "There are too many results"
+  val tooManyAddressesFoundForPostcodeMessage: String = "Enter more details. This search returns more than 1 addresses"
 
   private lazy val buildingNumberOrName: TextField = textField(id("filter"))
   private lazy val postcodeField: TextField = textField(id("postcode"))
