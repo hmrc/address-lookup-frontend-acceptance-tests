@@ -5,6 +5,7 @@ CREATE TABLE __schema__.bm
     uid                   UUID PRIMARY KEY,
     id                    BIGINT,
     hash                  TEXT,
+    cip_id                TEXT,
     number                TEXT,
     street                TEXT,
     unit                  TEXT,
@@ -23,6 +24,7 @@ BEGIN
                 ARRAY [
                     NULLIF(replace(btrim((NEW.number)::text), '""', ''), ''),
                     NULLIF(replace(btrim((NEW.street)::text), '""', ''), ''),
+                    NULLIF(replace(btrim((NEW.cip_id)::text), '""', ''), ''),
                     NULLIF(replace(btrim((NEW.unit)::text), '""', ''), ''),
                     NULLIF(replace(btrim((NEW.city)::text), '""', ''), ''),
                     NULLIF(replace(btrim((NEW.district)::text), '""', ''), ''),
@@ -47,6 +49,7 @@ AS
 SELECT uid,
        id,
        hash,
+       cip_id,
        number,
        street,
        unit,
