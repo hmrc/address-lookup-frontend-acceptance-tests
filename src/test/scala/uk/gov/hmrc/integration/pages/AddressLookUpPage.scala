@@ -20,17 +20,16 @@ import org.openqa.selenium.support.ui.ExpectedConditions._
 
 case class AddressLookUpPage() extends BasePage {
 
-  val invalidPostcodeMessage: Option[String] = Some("Enter a real UK Postcode e.g. AA1 1AA")
+  val invalidPostcodeMessage: Option[String]          = Some("Enter a real UK Postcode e.g. AA1 1AA")
   val tooManyAddressesFoundForPostcodeMessage: String = "Enter more details. This search returns more than 1 addresses"
 
   private lazy val buildingNumberOrName: TextField = textField(id("filter"))
-  private lazy val postcodeField: TextField = textField(id("postcode"))
-  private lazy val findMyAddress: IdQuery = id("continue")
-  private lazy val enterAddressManually: IdQuery = id("manualAddress")
+  private lazy val postcodeField: TextField        = textField(id("postcode"))
+  private lazy val findMyAddress: IdQuery          = id("continue")
+  private lazy val enterAddressManually: IdQuery   = id("manualAddress")
 
-  override def isOnPage(ukMode: Boolean = true): Boolean = {
+  override def isOnPage(ukMode: Boolean = true): Boolean =
     webDriverWillWait.until(titleIs(if (ukMode) "Find your UK address" else "Find your address"))
-  }
 
   def clickFindAddress(): AddressLookUpPage = {
     click on findMyAddress
@@ -47,7 +46,6 @@ case class AddressLookUpPage() extends BasePage {
     this
   }
 
-  def clickManualEntry(): Unit = {
+  def clickManualEntry(): Unit =
     click on enterAddressManually
-  }
 }

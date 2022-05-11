@@ -25,9 +25,15 @@ import scala.util.Random
 
 class ManualAddressEntrySpec extends BaseSpec {
 
-  val UK_ADDRESS: Address = Address(List("10 Springfield Road", "Springfield"), Some("SP1 1AA"), Country("GB", "United Kingdom"))
-  val UK_ORGANISATION_ADDRESS: Address = Address(List("10 Wunder Drive", "Wunderville"), Some("WD1 1WD"), Country("GB", "United Kingdom"), organisation = Some("Wunder Works Wheels"))
-  val INT_ADDRESS: Address = Address(List("Musée du Louvre", "Paris"), Some("75058"), Country("FR", "France"))
+  val UK_ADDRESS: Address              =
+    Address(List("10 Springfield Road", "Springfield"), Some("SP1 1AA"), Country("GB", "United Kingdom"))
+  val UK_ORGANISATION_ADDRESS: Address = Address(
+    List("10 Wunder Drive", "Wunderville"),
+    Some("WD1 1WD"),
+    Country("GB", "United Kingdom"),
+    organisation = Some("Wunder Works Wheels")
+  )
+  val INT_ADDRESS: Address             = Address(List("Musée du Louvre", "Paris"), Some("75058"), Country("FR", "France"))
 
   def randomString(chars: Int): String = Random.alphanumeric.take(chars).mkString
 
@@ -36,10 +42,11 @@ class ManualAddressEntrySpec extends BaseSpec {
     Scenario("Can submit a manually entered UK address") {
       Given("I have manually entered a valid UK address")
       val startPage = initializeJourney()
-      val clientId = getClientID(startPage)
+      val clientId  = getClientID(startPage)
       go to startPage
       AddressLookUpPage().clickManualEntry()
-      EditAddressPage().enterAddressLineOne(UK_ADDRESS.lines.head)
+      EditAddressPage()
+        .enterAddressLineOne(UK_ADDRESS.lines.head)
         .enterTown(UK_ADDRESS.lines(1))
         .enterPostcode(UK_ADDRESS.postcode.get)
 
@@ -60,7 +67,7 @@ class ManualAddressEntrySpec extends BaseSpec {
     Scenario("Can submit a manually entered UK address with an Organisation Name") {
       Given("I have manually entered a valid UK address with an Organisation Name")
       val startPage = initializeJourney()
-      val clientId = getClientID(startPage)
+      val clientId  = getClientID(startPage)
       go to startPage
       AddressLookUpPage().clickManualEntry()
       EditAddressPage()
@@ -86,11 +93,13 @@ class ManualAddressEntrySpec extends BaseSpec {
     Scenario("Can submit a manually entered international address") {
       Given("I have manually entered a valid international address")
       val startPage = initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
-      val clientId = getClientID(startPage)
+      val clientId  = getClientID(startPage)
       go to startPage
-      CountrySelectorPage().selectCountry(INT_ADDRESS.country.name)
+      CountrySelectorPage()
+        .selectCountry(INT_ADDRESS.country.name)
         .clickNext()
-      EditAddressPage().enterAddressLineOne(INT_ADDRESS.lines.head)
+      EditAddressPage()
+        .enterAddressLineOne(INT_ADDRESS.lines.head)
         .enterTown(INT_ADDRESS.lines(1))
         .enterPostcode(INT_ADDRESS.postcode.get)
 
@@ -160,7 +169,7 @@ class ManualAddressEntrySpec extends BaseSpec {
     Scenario("Can submit a manually entered UK address in International mode") {
       Given("I have manually entered a valid UK address")
       val startPage = initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
-      val clientId = getClientID(startPage)
+      val clientId  = getClientID(startPage)
       go to startPage
       When("I go to the manual entry page")
       CountrySelectorPage()
@@ -168,7 +177,8 @@ class ManualAddressEntrySpec extends BaseSpec {
         .clickNext()
 
       AddressLookUpPage().clickManualEntry()
-      EditAddressPage().enterAddressLineOne(UK_ADDRESS.lines.head)
+      EditAddressPage()
+        .enterAddressLineOne(UK_ADDRESS.lines.head)
         .enterTown(UK_ADDRESS.lines(1))
         .enterPostcode(UK_ADDRESS.postcode.get)
 
@@ -190,16 +200,17 @@ class ManualAddressEntrySpec extends BaseSpec {
       Given("I have manually entered a valid international address")
       val startPage = initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
       go to startPage
-      CountrySelectorPage().selectCountry(INT_ADDRESS.country.name)
+      CountrySelectorPage()
+        .selectCountry(INT_ADDRESS.country.name)
         .clickNext()
-      EditAddressPage().enterAddressLineOne(INT_ADDRESS.lines.head)
+      EditAddressPage()
+        .enterAddressLineOne(INT_ADDRESS.lines.head)
         .enterTown(INT_ADDRESS.lines(1))
         .enterPostcode(INT_ADDRESS.postcode.get)
 
       When("I reach the confirm my address screen ")
 
       EditAddressPage().clickNext()
-
 
       Then("I can go back and change the country I have selected")
 
@@ -242,7 +253,8 @@ class ManualAddressEntrySpec extends BaseSpec {
       AddressLookUpPage().clickManualEntry()
 
       When("I do not submit the required Edit Address fields")
-      EditAddressPage().enterAddressLineOne(randomString(257))
+      EditAddressPage()
+        .enterAddressLineOne(randomString(257))
         .enterTown(randomString(257))
         .enterPostcode(randomString(257))
       EditAddressPage().clickNext()

@@ -22,24 +22,20 @@ import uk.gov.hmrc.integration.utils.BrowserDriver
 
 trait BasePage extends BrowserDriver {
 
-  private lazy val backLink: CssSelectorQuery = cssSelector(".govuk-back-link")
+  private lazy val backLink: CssSelectorQuery   = cssSelector(".govuk-back-link")
   private lazy val pageHeading: Option[Element] = find(id("pageHeading"))
 
   def isOnPage(ukMode: Boolean = false): Boolean = false
 
-  def errorSummaryLink(element: String): WebElement = {
+  def errorSummaryLink(element: String): WebElement =
     webDriverWillWait.until(visibilityOfElementLocated(By.cssSelector(s"a[href*='$element']")))
-  }
 
-  def errorNotificationField(field: String): WebElement = {
+  def errorNotificationField(field: String): WebElement =
     webDriverWillWait.until(visibilityOfElementLocated(By.id(s"$field-error")))
-  }
 
-  def getPageHeading: String = {
+  def getPageHeading: String =
     pageHeading.get.text
-  }
 
-  def clickBackLink(): Unit = {
+  def clickBackLink(): Unit =
     click on backLink
-  }
 }

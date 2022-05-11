@@ -21,6 +21,6 @@ import play.api.libs.json.{Json, OWrites, Reads}
 case class LocalCustodian(code: Int, name: String)
 
 object LocalCustodian {
-  implicit val reads: Reads[LocalCustodian] = Json.reads[LocalCustodian]
+  implicit val reads: Reads[LocalCustodian]    = Json.reads[LocalCustodian]
   implicit val writes: OWrites[LocalCustodian] = Json.writes[LocalCustodian]
 }

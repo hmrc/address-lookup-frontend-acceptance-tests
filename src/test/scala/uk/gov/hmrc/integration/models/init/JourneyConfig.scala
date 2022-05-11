@@ -18,14 +18,15 @@ package uk.gov.hmrc.integration.models.init
 
 import play.api.libs.json.{Format, Json, OFormat}
 
-case class JourneyConfig(version: Int,
-                         options: JourneyOptions,
-                         labels: Option[JourneyLabels] = Some(JourneyLabels(None)), //messages
-                         requestedVersion: Option[Int] = None) {
+case class JourneyConfig(
+  version: Int,
+  options: JourneyOptions,
+  labels: Option[JourneyLabels] = Some(JourneyLabels(None)), //messages
+  requestedVersion: Option[Int] = None
+) {
 
-  def asJsonString(): String = {
+  def asJsonString(): String =
     Json.toJson(this).toString()
-  }
 }
 
 object JourneyConfig {

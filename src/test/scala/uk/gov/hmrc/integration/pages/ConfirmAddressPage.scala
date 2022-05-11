@@ -20,23 +20,20 @@ import org.openqa.selenium.support.ui.ExpectedConditions.titleIs
 
 case class ConfirmAddressPage() extends BasePage {
 
-  private lazy val changeAddressLink = id("changeLink")
+  private lazy val changeAddressLink      = id("changeLink")
   private lazy val confirmButton: IdQuery = id("continue")
 
   lazy val addressLineOneField: String = find(id("line1")).get.text
-  lazy val townField: String = find(id("line2")).get.text
-  lazy val postCodeField: String = find(id("postCode")).get.text
-  lazy val CountryField: String = find(id("country")).get.text
+  lazy val townField: String           = find(id("line2")).get.text
+  lazy val postCodeField: String       = find(id("postCode")).get.text
+  lazy val CountryField: String        = find(id("country")).get.text
 
-  override def isOnPage(ukMode: Boolean = false): Boolean = {
+  override def isOnPage(ukMode: Boolean = false): Boolean =
     webDriverWillWait.until(titleIs("Review and confirm"))
-  }
 
-  def confirmAddress(): Unit = {
+  def confirmAddress(): Unit =
     click on confirmButton
-  }
 
-  def changeAddress(): Unit = {
+  def changeAddress(): Unit =
     click on changeAddressLink
-  }
 }

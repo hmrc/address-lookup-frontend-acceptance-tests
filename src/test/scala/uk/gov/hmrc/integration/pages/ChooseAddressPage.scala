@@ -24,37 +24,34 @@ case class ChooseAddressPage() extends BasePage {
 
   private lazy val continue: Option[Element] = find(id("continue"))
 
-  lazy val enterAddressManually: IdQuery = id("editAddress")
+  lazy val enterAddressManually: IdQuery             = id("editAddress")
   lazy val addressNotSelectedError: CssSelectorQuery = cssSelector(".govuk-error-summary__list a")
-  lazy val firstAddress: IdQuery = id("addressId")
+  lazy val firstAddress: IdQuery                     = id("addressId")
 
-  override def isOnPage(ukMode: Boolean = false): Boolean = {
+  override def isOnPage(ukMode: Boolean = false): Boolean =
     webDriverWillWait.until(titleIs("Choose your address"))
-  }
 
-  def getAddressesCount(postcode: String): Int = {
+  def getAddressesCount(postcode: String): Int =
     findAll(xpath(s"//*[contains(text(), '$postcode')]")).size
-  }
 
   def selectAddress(address: String): ChooseAddressPage = {
-    webDriverWillWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(s"//*[contains(text(), '$address')]"))).click()
+    webDriverWillWait
+      .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(s"//*[contains(text(), '$address')]")))
+      .click()
     this
   }
 
-  def clickContinue(): Unit = {
+  def clickContinue(): Unit =
     click on continue.get
-  }
 
-  def clickEnterAddressManually(): Unit = {
+  def clickEnterAddressManually(): Unit =
     click on enterAddressManually
-  }
 
   def clickAddressNotSelectedError(): ChooseAddressPage = {
     click on addressNotSelectedError
     this
   }
 
-  def firstAddressEntryIsActiveElement: Boolean = {
+  def firstAddressEntryIsActiveElement: Boolean =
     firstAddress.findElement.get.underlying.equals(webDriver.switchTo().activeElement())
-  }
 }

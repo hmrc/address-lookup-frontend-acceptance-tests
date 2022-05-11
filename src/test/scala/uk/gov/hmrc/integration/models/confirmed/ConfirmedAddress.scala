@@ -18,10 +18,12 @@ package uk.gov.hmrc.integration.models.confirmed
 
 import play.api.libs.json.{Format, Json}
 
-case class ConfirmedAddress(auditRef: String,
-                            id: Option[String] = None,
-                            address: Address,
-                            organisation: Option[String] = None)
+case class ConfirmedAddress(
+  auditRef: String,
+  id: Option[String] = None,
+  address: Address,
+  organisation: Option[String] = None
+)
 
 object ConfirmedAddress {
   implicit val format: Format[ConfirmedAddress] = Json.format[ConfirmedAddress]

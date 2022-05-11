@@ -23,15 +23,16 @@ import uk.gov.hmrc.integration.utils.{BrowserDriver, CommonAssertions, JourneyBu
 
 import java.nio.file.Paths
 
-trait BaseSpec extends AnyFeatureSpec
-  with PostgresDB
-  with GivenWhenThen
-  with BeforeAndAfterAll
-  with BeforeAndAfterEach
-  with BrowserDriver
-  with JourneyBuilder
-  with CommonAssertions
-  with Matchers {
+trait BaseSpec
+    extends AnyFeatureSpec
+    with PostgresDB
+    with GivenWhenThen
+    with BeforeAndAfterAll
+    with BeforeAndAfterEach
+    with BrowserDriver
+    with JourneyBuilder
+    with CommonAssertions
+    with Matchers {
 
   override def beforeAll(): Unit = {
     super.beforeAll()
@@ -41,19 +42,17 @@ trait BaseSpec extends AnyFeatureSpec
     }
   }
 
-  override def afterEach: Unit = {
+  override def afterEach: Unit =
     webDriver.manage().deleteAllCookies()
-  }
 
-  override def afterAll(): Unit = {
+  override def afterAll(): Unit =
     webDriver.quit()
-  }
 
   override def withFixture(test: NoArgTest): Outcome = {
     val fixture = super.withFixture(test)
     if (!fixture.isSucceeded) {
       val screenshotDirectory = Paths.get("./target/screenshots").toAbsolutePath.toString
-      val screenshotFilename = test.name.replaceAll("\\s", "_").replaceAll("/", "")
+      val screenshotFilename  = test.name.replaceAll("\\s", "_").replaceAll("/", "")
       setCaptureDir(screenshotDirectory)
       capture to screenshotFilename
       println(s"Saved screenshot for failing test to '$screenshotDirectory/$screenshotFilename'")

@@ -20,19 +20,18 @@ import org.openqa.selenium.support.ui.ExpectedConditions.titleIs
 
 case class EditAddressPage() extends BasePage {
 
-  private lazy val nextButton: Option[Element] = find(id("continue"))
+  private lazy val nextButton: Option[Element]   = find(id("continue"))
   private lazy val countryField: Option[Element] = find(id("countryName"))
 
   lazy val organisationNameField: TextField = textField(id("organisation"))
-  lazy val addressLineOneField: TextField = textField(id("line1"))
-  lazy val addressLineTwoField: TextField = textField(id("line2"))
+  lazy val addressLineOneField: TextField   = textField(id("line1"))
+  lazy val addressLineTwoField: TextField   = textField(id("line2"))
   lazy val addressLineThreeField: TextField = textField(id("line3"))
-  lazy val townField: TextField = textField(id("town"))
-  lazy val postcodeField: TextField = textField(id("postcode"))
+  lazy val townField: TextField             = textField(id("town"))
+  lazy val postcodeField: TextField         = textField(id("postcode"))
 
-  override def isOnPage(ukMode: Boolean = false): Boolean = {
+  override def isOnPage(ukMode: Boolean = false): Boolean =
     webDriverWillWait.until(titleIs("Enter your address"))
-  }
 
   def enterOrganisation(organisationName: String): EditAddressPage = {
     organisationNameField.clear()
@@ -90,7 +89,6 @@ case class EditAddressPage() extends BasePage {
     countryField.get.attribute("value").get
   }
 
-  def clickNext(): Unit = {
+  def clickNext(): Unit =
     click on nextButton.get
-  }
 }

@@ -21,6 +21,6 @@ import play.api.libs.json.{Json, OWrites, Reads}
 case class PostcodeResponse(isPOBox: Boolean)
 
 object PostcodeResponse {
-  implicit val reads: Reads[PostcodeResponse] = Json.reads[PostcodeResponse]
+  implicit val reads: Reads[PostcodeResponse]    = Json.reads[PostcodeResponse]
   implicit val writes: OWrites[PostcodeResponse] = Json.writes[PostcodeResponse]
 }

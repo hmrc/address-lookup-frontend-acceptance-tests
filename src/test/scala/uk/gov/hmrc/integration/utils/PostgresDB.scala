@@ -31,14 +31,14 @@ import scala.concurrent.ExecutionContext.Implicits.global
 trait PostgresDB {
 
   implicit val cs: ContextShift[IO] = IO.contextShift(global)
-  implicit val timer: Timer[IO] = IO.timer(global)
+  implicit val timer: Timer[IO]     = IO.timer(global)
 
   protected lazy val tx: Transactor[IO] = {
     println(s""">>> schemaName: $schemaName""")
     for {
       ptx <- createInitialTransactor()
-      _ <- initialiseDatabaseSchema()(ptx)
-      _ <- initialiseTestData()(ptx)
+      _   <- initialiseDatabaseSchema()(ptx)
+      _   <- initialiseTestData()(ptx)
       stx <- createSchemaTransactor()
     } yield stx
   }.unsafeRunSync()
@@ -53,15 +53,15 @@ trait PostgresDB {
       _ <- update(s"SET SEARCH_PATH TO $schemaName")
       _ <- printLine(s""">>> Set search path to $schemaName""")
 
-      _ <- printLine(s""">>> Creating UK lookup table""")
+      _   <- printLine(s""">>> Creating UK lookup table""")
       ddl <- classpathResourceURL(s"/data/uk/address_lookup_uk_ddl.sql", this)
-      _ <- update(new File(ddl), schemaName)
-      _ <- printLine(s""">>> Created UK lookup table""")
+      _   <- update(new File(ddl), schemaName)
+      _   <- printLine(s""">>> Created UK lookup table""")
 
-      _ <- printLine(s""">>> Creating INT lookup table""")
+      _   <- printLine(s""">>> Creating INT lookup table""")
       ddl <- classpathResourceURL(s"/data/int/address_lookup_int_ddl.sql", this)
-      _ <- update(new File(ddl), schemaName)
-      _ <- printLine(s""">>> Created INT lookup table""")
+      _   <- update(new File(ddl), schemaName)
+      _   <- printLine(s""">>> Created INT lookup table""")
     } yield ()).unsafeRunSync()
 
     IO(t)
@@ -69,17 +69,17 @@ trait PostgresDB {
 
   private def initialiseTestData()(implicit t: Transactor[IO]): IO[Transactor[IO]] = {
     (for {
-      _ <- printLine(s""">>> Creating UK lookup view and indexes function""")
+      _   <- printLine(s""">>> Creating UK lookup view and indexes function""")
       sql <- classpathResourceURL(s"/data/uk/address-lookup-data.csv", this)
-      _ <- ingestDataFile(s"$schemaName.address_lookup", sql)
-      _ <- printLine(s""">>> Created UK lookup view and indexes function""")
+      _   <- ingestDataFile(s"$schemaName.address_lookup", sql)
+      _   <- printLine(s""">>> Created UK lookup view and indexes function""")
     } yield ()).unsafeRunSync()
 
     (for {
-      _ <- printLine(s""">>> Creating INT lookup view and indexes function""")
+      _   <- printLine(s""">>> Creating INT lookup view and indexes function""")
       sql <- classpathResourceURL(s"/data/int/non-uk-data.csv", this)
-      _ <- ingestDataFile(s"$schemaName.bm", sql)
-      _ <- printLine(s""">>> Created INT lookup view and indexes function""")
+      _   <- ingestDataFile(s"$schemaName.bm", sql)
+      _   <- printLine(s""">>> Created INT lookup view and indexes function""")
     } yield ()).unsafeRunSync()
 
     IO(t)
@@ -117,9 +117,11 @@ trait PostgresDB {
 
   private def ingestDataFile(table: String, filePath: URI)(implicit tx: Transactor[IO]): IO[Long] = {
     val in = Files.newInputStream(new File(filePath).toPath, StandardOpenOption.READ)
-    PHC.pgGetCopyAPI(
-      PFCM.copyIn(s"""COPY $table FROM STDIN WITH (FORMAT CSV, HEADER, DELIMITER ',');""", in)
-    ).transact(tx)
+    PHC
+      .pgGetCopyAPI(
+        PFCM.copyIn(s"""COPY $table FROM STDIN WITH (FORMAT CSV, HEADER, DELIMITER ',');""", in)
+      )
+      .transact(tx)
   }
   // END
 }

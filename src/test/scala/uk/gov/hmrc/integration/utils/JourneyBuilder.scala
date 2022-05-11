@@ -26,7 +26,8 @@ import java.util.concurrent.TimeUnit.SECONDS
 
 trait JourneyBuilder {
 
-  val httpClient: OkHttpClient = new OkHttpClient().newBuilder()
+  val httpClient: OkHttpClient = new OkHttpClient()
+    .newBuilder()
     .connectTimeout(10L, SECONDS)
     .readTimeout(10L, SECONDS)
     .build()
@@ -34,9 +35,12 @@ trait JourneyBuilder {
   val defaultConfiguration: String = JourneyConfig(2, JourneyOptions("None", ukMode = Some(true))).asJsonString()
 
   def initializeJourney(configuration: String = defaultConfiguration): String = {
-    val request = new Request.Builder()
+    val request  = new Request.Builder()
       .url(s"${TestConfig.apiUrl("address-lookup-frontend")}/v2/init")
-      .method("POST", RequestBody.create(MediaType.parse("application/json"), Json.toJson(configuration).asInstanceOf[JsString].value))
+      .method(
+        "POST",
+        RequestBody.create(MediaType.parse("application/json"), Json.toJson(configuration).asInstanceOf[JsString].value)
+      )
     val response = httpClient.newCall(request.build()).execute()
     if (response.isSuccessful) {
       //Return lookup screen URL
@@ -46,9 +50,8 @@ trait JourneyBuilder {
     }
   }
 
-  def getClientID(onRampUrl: String): String = {
+  def getClientID(onRampUrl: String): String =
     HttpUrl.parse(onRampUrl).pathSegments().get(1)
-  }
 
   def getOffRampUrl(onRampUrl: String, continueUrl: String): String = {
     val clientId = getClientID(onRampUrl)
@@ -56,7 +59,7 @@ trait JourneyBuilder {
   }
 
   def getConfirmedAddress(id: String): ConfirmedAddress = {
-    val request = new Request.Builder()
+    val request  = new Request.Builder()
       .url(s"${TestConfig.apiUrl("address-lookup-frontend")}/confirmed?id=$id")
       .method("GET", null)
     val response = httpClient.newCall(request.build()).execute()

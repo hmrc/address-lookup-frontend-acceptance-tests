@@ -16,8 +16,10 @@
 
 package uk.gov.hmrc.integration.models.init
 
-case class LanguageLabels(appLevelLabels: Option[AppLevelLabels] = None,
-                          selectPageLabels: Option[SelectPageLabels] = None,
-                          lookupPageLabels: Option[LookupPageLabels] = None,
-                          editPageLabels: Option[EditPageLabels] = None,
-                          confirmPageLabels: Option[ConfirmPageLabels] = None)
+case class LanguageLabels(
+  appLevelLabels: Option[AppLevelLabels] = None,
+  selectPageLabels: Option[SelectPageLabels] = None,
+  lookupPageLabels: Option[LookupPageLabels] = None,
+  editPageLabels: Option[EditPageLabels] = None,
+  confirmPageLabels: Option[ConfirmPageLabels] = None
+)

@@ -22,22 +22,18 @@ case class AddressNotFoundPage() extends BasePage {
 
   private val postcodeErrorMessagePrefix = "We cannot find any addresses for"
 
-  private lazy val enterAddressManuallyLink: IdQuery = id("enterManual")
+  private lazy val enterAddressManuallyLink: IdQuery   = id("enterManual")
   private lazy val tryDifferentPostcodeButton: IdQuery = id("continue")
 
-  override def isOnPage(ukMode: Boolean = false): Boolean = {
+  override def isOnPage(ukMode: Boolean = false): Boolean =
     webDriverWillWait.until(titleIs("We cannot find any addresses"))
-  }
 
-  def tryADifferentPostcode(): Unit = {
+  def tryADifferentPostcode(): Unit =
     click on tryDifferentPostcodeButton
-  }
 
-  def enterAddressManually(): Unit = {
+  def enterAddressManually(): Unit =
     click on enterAddressManuallyLink
-  }
 
-  def constructPostcodeErrorMessageWith(postCode: String): String = {
+  def constructPostcodeErrorMessageWith(postCode: String): String =
     s"$postcodeErrorMessagePrefix $postCode"
-  }
 }

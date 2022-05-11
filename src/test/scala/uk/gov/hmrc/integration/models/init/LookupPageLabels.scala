@@ -18,17 +18,19 @@ package uk.gov.hmrc.integration.models.init
 
 import play.api.libs.json.{Format, Json}
 
-case class LookupPageLabels(title: Option[String] = None,
-                            var titleUkMode: Option[String] = None,
-                            heading: Option[String] = None,
-                            var headingUkMode: Option[String] = None,
-                            filterLabel: Option[String] = None,
-                            postcodeLabel: Option[String] = None,
-                            var postcodeLabelUkMode: Option[String] = None,
-                            submitLabel: Option[String] = None,
-                            noResultsFoundMessage: Option[String] = None,
-                            resultLimitExceededMessage: Option[String] = None,
-                            manualAddressLinkText: Option[String] = None) {
+case class LookupPageLabels(
+  title: Option[String] = None,
+  var titleUkMode: Option[String] = None,
+  heading: Option[String] = None,
+  var headingUkMode: Option[String] = None,
+  filterLabel: Option[String] = None,
+  postcodeLabel: Option[String] = None,
+  var postcodeLabelUkMode: Option[String] = None,
+  submitLabel: Option[String] = None,
+  noResultsFoundMessage: Option[String] = None,
+  resultLimitExceededMessage: Option[String] = None,
+  manualAddressLinkText: Option[String] = None
+) {
 
   titleUkMode = titleUkMode.orElse(title)
   headingUkMode = headingUkMode.orElse(heading)

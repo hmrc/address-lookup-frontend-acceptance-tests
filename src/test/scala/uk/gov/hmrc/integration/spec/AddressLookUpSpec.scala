@@ -57,7 +57,7 @@ class AddressLookUpSpec extends BaseSpec {
     Scenario("Address search - postcode only") {
       Given("I am on the address lookup form")
       val startPage = initializeJourney()
-      val clientId = getClientID(startPage)
+      val clientId  = getClientID(startPage)
       go to startPage
       assert(AddressLookUpPage().isOnPage())
 
@@ -84,7 +84,7 @@ class AddressLookUpSpec extends BaseSpec {
     Scenario("Address search - Organisation") {
       Given("I am on the address lookup form")
       val startPage = initializeJourney()
-      val clientId = getClientID(startPage)
+      val clientId  = getClientID(startPage)
       go to startPage
       assert(AddressLookUpPage().isOnPage())
 
@@ -114,7 +114,8 @@ class AddressLookUpSpec extends BaseSpec {
       assert(AddressLookUpPage().isOnPage())
 
       When("I search for an address using any postcode and a building name / number")
-      AddressLookUpPage().enterPostcode(MULTIPLE_MATCHES.address.postcode)
+      AddressLookUpPage()
+        .enterPostcode(MULTIPLE_MATCHES.address.postcode)
         .enterBuildingNumberOrName("11")
         .clickFindAddress()
 
@@ -132,7 +133,8 @@ class AddressLookUpSpec extends BaseSpec {
       assert(AddressLookUpPage().isOnPage())
 
       When("I search for an address using the postcode with no addresses")
-      AddressLookUpPage().enterPostcode(postcode)
+      AddressLookUpPage()
+        .enterPostcode(postcode)
         .clickFindAddress()
 
       Then("I am presented with a message stating there are no search results")
@@ -145,7 +147,8 @@ class AddressLookUpSpec extends BaseSpec {
       assert(AddressLookUpPage().isOnPage())
 
       When("I search for an address using an invalid postcode")
-      AddressLookUpPage().enterPostcode("ZZZ ZZZddd")
+      AddressLookUpPage()
+        .enterPostcode("ZZZ ZZZddd")
         .clickFindAddress()
 
       Then("I am presented with a message stating the postcode is invalid")
@@ -159,12 +162,20 @@ class AddressLookUpSpec extends BaseSpec {
     Scenario("Scenario: Address search - Too Many Search Results") {
       Given("I have postcode with more than the configured address search results limit")
       And("I am on the address lookup form")
-      val configuration: String = JourneyConfig(2, JourneyOptions("None", ukMode = Some(true), selectPageConfig = Some(SelectPageConfig(proposalListLimit = Some(1))))).asJsonString()
+      val configuration: String = JourneyConfig(
+        2,
+        JourneyOptions(
+          "None",
+          ukMode = Some(true),
+          selectPageConfig = Some(SelectPageConfig(proposalListLimit = Some(1)))
+        )
+      ).asJsonString()
       go to initializeJourney(configuration)
       assert(AddressLookUpPage().isOnPage())
 
       When("I search for an address using the postcode with more than the configured address search results limit")
-      AddressLookUpPage().enterPostcode(TOO_MANY_MATCHES.address.postcode)
+      AddressLookUpPage()
+        .enterPostcode(TOO_MANY_MATCHES.address.postcode)
         .clickFindAddress()
 
       Then("I am presented with a message stating there are too many/more than the configured search results limit")
@@ -175,7 +186,8 @@ class AddressLookUpSpec extends BaseSpec {
       Given("I am on the address lookup form")
       go to initializeJourney()
       assert(AddressLookUpPage().isOnPage())
-      AddressLookUpPage().enterPostcode(NO_MATCHES.postcode)
+      AddressLookUpPage()
+        .enterPostcode(NO_MATCHES.postcode)
         .clickFindAddress()
 
       When("click on the Enter address manually link")

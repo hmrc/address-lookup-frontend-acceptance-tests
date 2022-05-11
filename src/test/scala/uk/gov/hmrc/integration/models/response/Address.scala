@@ -19,28 +19,28 @@ package uk.gov.hmrc.integration.models.response
 import play.api.libs.json.{Json, OWrites, Reads}
 
 //TODO should be GB not UK, requires test data fixes and TAV-403
-case class Address(lines: List[String],
-                   town: String,
-                   postcode: String,
-                   country: Option[Country] = Some(Country("GB", "United Kingdom")),
-                   subdivision: Option[Country] = None,
-                   organisationName: Option[String] = None) {
+case class Address(
+  lines: List[String],
+  town: String,
+  postcode: String,
+  country: Option[Country] = Some(Country("GB", "United Kingdom")),
+  subdivision: Option[Country] = None,
+  organisationName: Option[String] = None
+) {
 
-  def asString(): String = {
+  def asString(): String =
     s"${lines.mkString(",")}, $town, $postcode"
-  }
 
-  def toConfirmedAddress: uk.gov.hmrc.integration.models.confirmed.Address = {
+  def toConfirmedAddress: uk.gov.hmrc.integration.models.confirmed.Address =
     uk.gov.hmrc.integration.models.confirmed.Address(
       lines :+ town,
       Some(postcode),
       uk.gov.hmrc.integration.models.confirmed.Country(country.get.code, country.get.name),
       organisationName
     )
-  }
 }
 
 object Address {
-  implicit val reads: Reads[Address] = Json.reads[Address]
+  implicit val reads: Reads[Address]    = Json.reads[Address]
   implicit val writes: OWrites[Address] = Json.writes[Address]
 }

@@ -18,14 +18,16 @@ package uk.gov.hmrc.integration.models.init
 
 import play.api.libs.json.{Format, Json}
 
-case class ConfirmPageLabels(title: Option[String] = None,
-                             heading: Option[String] = None,
-                             infoSubheading: Option[String] = None,
-                             infoMessage: Option[String] = None,
-                             submitLabel: Option[String] = None,
-                             searchAgainLinkText: Option[String] = None,
-                             changeLinkText: Option[String] = None,
-                             confirmChangeText: Option[String] = None)
+case class ConfirmPageLabels(
+  title: Option[String] = None,
+  heading: Option[String] = None,
+  infoSubheading: Option[String] = None,
+  infoMessage: Option[String] = None,
+  submitLabel: Option[String] = None,
+  searchAgainLinkText: Option[String] = None,
+  changeLinkText: Option[String] = None,
+  confirmChangeText: Option[String] = None
+)
 
 object ConfirmPageLabels {
   implicit val format: Format[ConfirmPageLabels] =

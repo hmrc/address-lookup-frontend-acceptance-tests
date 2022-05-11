@@ -74,16 +74,26 @@ class AccessibilitySpec extends BaseSpec {
     Given("I have postcode with no associated addresses")
 
     And("I am on the address lookup form")
-    val configuration: String = JourneyConfig(2, JourneyOptions("None", ukMode = Some(true), selectPageConfig = Some(SelectPageConfig(proposalListLimit = Some(1))))).asJsonString()
+    val configuration: String = JourneyConfig(
+      2,
+      JourneyOptions(
+        "None",
+        ukMode = Some(true),
+        selectPageConfig = Some(SelectPageConfig(proposalListLimit = Some(1)))
+      )
+    ).asJsonString()
     go to initializeJourney(configuration)
     assert(AddressLookUpPage().isOnPage())
 
     When("I search for an address using the postcode with no addresses")
-    AddressLookUpPage().enterPostcode(NO_MATCHES.postcode)
+    AddressLookUpPage()
+      .enterPostcode(NO_MATCHES.postcode)
       .clickFindAddress()
 
     Then("I am presented with a message stating there are no search results")
-    AddressNotFoundPage().getPageHeading should be(AddressNotFoundPage().constructPostcodeErrorMessageWith(NO_MATCHES.postcode))
+    AddressNotFoundPage().getPageHeading should be(
+      AddressNotFoundPage().constructPostcodeErrorMessageWith(NO_MATCHES.postcode)
+    )
     AddressNotFoundPage().clickBackLink()
 
     When("I search for an address using the postcode with more than the configured address search results limit")

@@ -18,19 +18,20 @@ package uk.gov.hmrc.integration.models.response
 
 import play.api.libs.json.{Json, Reads, Writes}
 
-case class AddressRecord(id: String,
-                         uprn: Long,
-                         parentUprn: Option[Long],
-                         usrn: Option[Long],
-                         address: Address,
-                         language: String = "en",
-                         localCustodian: Option[LocalCustodian] = None,
-                         location: Option[Seq[BigDecimal]] = None,
-                         administrativeArea: Option[String] = None,
-                         poBox: Option[String] = None) {
-}
+case class AddressRecord(
+  id: String,
+  uprn: Long,
+  parentUprn: Option[Long],
+  usrn: Option[Long],
+  address: Address,
+  language: String = "en",
+  localCustodian: Option[LocalCustodian] = None,
+  location: Option[Seq[BigDecimal]] = None,
+  administrativeArea: Option[String] = None,
+  poBox: Option[String] = None
+) {}
 
 object AddressRecord {
-  implicit val reads: Reads[AddressRecord] = Json.reads[AddressRecord]
+  implicit val reads: Reads[AddressRecord]   = Json.reads[AddressRecord]
   implicit val writes: Writes[AddressRecord] = Json.writes[AddressRecord]
 }

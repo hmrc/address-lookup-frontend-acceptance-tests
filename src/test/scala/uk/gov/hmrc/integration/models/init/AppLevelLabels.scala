@@ -18,8 +18,7 @@ package uk.gov.hmrc.integration.models.init
 
 import play.api.libs.json.{Format, Json}
 
-case class AppLevelLabels(navTitle: Option[String] = None,
-                          phaseBannerHtml: Option[String] = None)
+case class AppLevelLabels(navTitle: Option[String] = None, phaseBannerHtml: Option[String] = None)
 
 object AppLevelLabels {
   implicit val format: Format[AppLevelLabels] = Json.format[AppLevelLabels]

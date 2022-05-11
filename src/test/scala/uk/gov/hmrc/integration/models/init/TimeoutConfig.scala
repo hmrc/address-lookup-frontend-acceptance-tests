@@ -20,14 +20,12 @@ import play.api.libs.functional.syntax.{unlift, _}
 import play.api.libs.json.Reads.min
 import play.api.libs.json.{Format, JsPath}
 
-case class TimeoutConfig(timeoutAmount: Int,
-                         timeoutUrl: String,
-                         timeoutKeepAliveUrl: Option[String] = None)
+case class TimeoutConfig(timeoutAmount: Int, timeoutUrl: String, timeoutKeepAliveUrl: Option[String] = None)
 
 object TimeoutConfig {
   implicit val timeoutFormat: Format[TimeoutConfig] = (
     (JsPath \ "timeoutAmount").format[Int](min(120)) and
       (JsPath \ "timeoutUrl").format[String] and
       (JsPath \ "timeoutKeepAliveUrl").formatNullable[String]
-    ) (TimeoutConfig.apply, unlift(TimeoutConfig.unapply))
+  )(TimeoutConfig.apply, unlift(TimeoutConfig.unapply))
 }
