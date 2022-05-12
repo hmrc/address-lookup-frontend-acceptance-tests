@@ -23,13 +23,12 @@ case class CountrySelectorPage() extends BasePage {
 
   private lazy val nextButton: Option[Element] = find(id("continue"))
 
-  lazy val countrySelectionField: SingleSel = singleSel(id("countryCode-select"))
-  lazy val countryField: Option[Element] = find(id("countryCode"))
+  lazy val countrySelectionField: SingleSel  = singleSel(id("countryCode-select"))
+  lazy val countryField: Option[Element]     = find(id("countryCode"))
   lazy val countryAutoCompleteField: IdQuery = id("countryCode__option--0")
 
-  override def isOnPage(ukMode: Boolean = false): Boolean = {
+  override def isOnPage(ukMode: Boolean = false): Boolean =
     webDriverWillWait.until(titleIs("Select your country"))
-  }
 
   def selectCountry(country: String): CountrySelectorPage = {
     countryField.get.underlying.click()
@@ -39,7 +38,6 @@ case class CountrySelectorPage() extends BasePage {
     this
   }
 
-  def clickNext(): Unit = {
+  def clickNext(): Unit =
     click on nextButton.get
-  }
 }

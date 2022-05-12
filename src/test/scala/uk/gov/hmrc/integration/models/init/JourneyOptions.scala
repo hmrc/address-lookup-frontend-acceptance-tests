@@ -18,24 +18,26 @@ package uk.gov.hmrc.integration.models.init
 
 import play.api.libs.json.{Format, Json}
 
-case class JourneyOptions(continueUrl: String,
-                          homeNavHref: Option[String] = None,
-                          signOutHref: Option[String] = None,
-                          accessibilityFooterUrl: Option[String] = None,
-                          additionalStylesheetUrl: Option[String] = None,
-                          phaseFeedbackLink: Option[String] = None,
-                          deskProServiceName: Option[String] = None,
-                          showPhaseBanner: Option[Boolean] = None,
-                          alphaPhase: Option[Boolean] = None,
-                          showBackButtons: Option[Boolean] = None,
-                          disableTranslations: Option[Boolean] = None,
-                          includeHMRCBranding: Option[Boolean] = None,
-                          ukMode: Option[Boolean] = None,
-                          allowedCountryCodes: Option[Set[String]] = None,
-                          selectPageConfig: Option[SelectPageConfig] = None,
-                          confirmPageConfig: Option[ConfirmPageConfig] = None,
-                          timeoutConfig: Option[TimeoutConfig] = None,
-                          serviceHref: Option[String] = None)
+case class JourneyOptions(
+  continueUrl: String,
+  homeNavHref: Option[String] = None,
+  signOutHref: Option[String] = None,
+  accessibilityFooterUrl: Option[String] = None,
+  additionalStylesheetUrl: Option[String] = None,
+  phaseFeedbackLink: Option[String] = None,
+  deskProServiceName: Option[String] = None,
+  showPhaseBanner: Option[Boolean] = None,
+  alphaPhase: Option[Boolean] = None,
+  showBackButtons: Option[Boolean] = None,
+  disableTranslations: Option[Boolean] = None,
+  includeHMRCBranding: Option[Boolean] = None,
+  ukMode: Option[Boolean] = None,
+  allowedCountryCodes: Option[Set[String]] = None,
+  selectPageConfig: Option[SelectPageConfig] = None,
+  confirmPageConfig: Option[ConfirmPageConfig] = None,
+  timeoutConfig: Option[TimeoutConfig] = None,
+  serviceHref: Option[String] = None
+)
 
 object JourneyOptions {
   implicit val format: Format[JourneyOptions] = Json.format[JourneyOptions]

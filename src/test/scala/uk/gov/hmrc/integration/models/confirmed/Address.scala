@@ -19,13 +19,13 @@ package uk.gov.hmrc.integration.models.confirmed
 import play.api.libs.json.{Json, OWrites, Reads}
 
 case class Address(
-                    lines: List[String],
-                    postcode: Option[String] = None,
-                    country: Country = Country("UK", "United Kingdom"),
-                    organisation: Option[String] = None
-                  )
+  lines: List[String],
+  postcode: Option[String] = None,
+  country: Country = Country("UK", "United Kingdom"),
+  organisation: Option[String] = None
+)
 
 object Address {
-  implicit val reads: Reads[Address] = Json.reads[Address]
+  implicit val reads: Reads[Address]    = Json.reads[Address]
   implicit val writes: OWrites[Address] = Json.writes[Address]
 }

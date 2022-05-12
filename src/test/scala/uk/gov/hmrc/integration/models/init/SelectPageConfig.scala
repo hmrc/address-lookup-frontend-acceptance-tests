@@ -18,8 +18,7 @@ package uk.gov.hmrc.integration.models.init
 
 import play.api.libs.json.{Format, Json}
 
-case class SelectPageConfig(proposalListLimit: Option[Int] = None,
-                            showSearchAgainLink: Option[Boolean] = None)
+case class SelectPageConfig(proposalListLimit: Option[Int] = None, showSearchAgainLink: Option[Boolean] = None)
 
 object SelectPageConfig {
   implicit val format: Format[SelectPageConfig] = Json.format[SelectPageConfig]

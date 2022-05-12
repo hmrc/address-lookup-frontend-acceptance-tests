@@ -18,10 +18,12 @@ package uk.gov.hmrc.integration.models.init
 
 import play.api.libs.json.{Format, Json}
 
-case class ConfirmPageConfig(showSearchAgainLink: Option[Boolean] = None,
-                             showSubHeadingAndInfo: Option[Boolean] = None,
-                             showChangeLink: Option[Boolean] = None,
-                             showConfirmChangeText: Option[Boolean] = None)
+case class ConfirmPageConfig(
+  showSearchAgainLink: Option[Boolean] = None,
+  showSubHeadingAndInfo: Option[Boolean] = None,
+  showChangeLink: Option[Boolean] = None,
+  showConfirmChangeText: Option[Boolean] = None
+)
 
 object ConfirmPageConfig {
   implicit val format: Format[ConfirmPageConfig] = Json.format[ConfirmPageConfig]

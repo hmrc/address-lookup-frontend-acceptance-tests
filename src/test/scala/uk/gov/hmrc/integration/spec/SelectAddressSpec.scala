@@ -93,7 +93,8 @@ class SelectAddressSpec extends BaseSpec {
     Scenario("TXMNT-721: Select address page - back link") {
       Given("I am on the suggested addresses screen")
       go to initializeJourney()
-      AddressLookUpPage().enterPostcode(MULTIPLE_MATCHES.address.postcode)
+      AddressLookUpPage()
+        .enterPostcode(MULTIPLE_MATCHES.address.postcode)
         .clickFindAddress()
       assertThat(ChooseAddressPage().isOnPage()).isTrue
 
@@ -107,7 +108,8 @@ class SelectAddressSpec extends BaseSpec {
     Scenario("TXMNT-721 - Select address page, enter address manually, then go back") {
       Given("I am on the suggested addresses screen")
       go to initializeJourney()
-      AddressLookUpPage().enterPostcode(MULTIPLE_MATCHES.address.postcode)
+      AddressLookUpPage()
+        .enterPostcode(MULTIPLE_MATCHES.address.postcode)
         .clickFindAddress()
       assertThat(ChooseAddressPage().isOnPage()).isTrue
 

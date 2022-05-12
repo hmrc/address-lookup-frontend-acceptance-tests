@@ -20,7 +20,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions.titleIs
 
 case class ErrorPage() extends BasePage {
 
-  override def isOnPage(ukMode: Boolean = false): Boolean = {
+  override def isOnPage(ukMode: Boolean = false): Boolean =
     webDriverWillWait.until(titleIs("Sorry, there is a problem with the service"))
-  }
 }

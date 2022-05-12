@@ -18,11 +18,9 @@ package uk.gov.hmrc.integration.models.confirmed
 
 import play.api.libs.json.{Json, OWrites, Reads}
 
-case class Country(code: String,
-                   name: String) {
-}
+case class Country(code: String, name: String) {}
 
 object Country {
-  implicit val reads: Reads[Country] = Json.reads[Country]
+  implicit val reads: Reads[Country]    = Json.reads[Country]
   implicit val writes: OWrites[Country] = Json.writes[Country]
 }

@@ -27,26 +27,26 @@ trait CommonAssertions extends BrowserDriver {
     expectedErrorMessage match {
       case None =>
         assertThat(linkToError.findAllElements.isEmpty).isTrue
-      case _ =>
+      case _    =>
         assertThat(linkToError.findElement.get.isDisplayed).isTrue
         assertThat(linkToError.findElement.get.text).isEqualTo(expectedErrorMessage.get)
     }
   }
 
   def assertErrorMessage(elementIdentifier: String, expectedErrorMessage: Option[String] = None): Unit = {
-    val errorMessage = id(s"$elementIdentifier-error")
+    val errorMessage     = id(s"$elementIdentifier-error")
     //TODO clean this up, it may not catch a case where an element doesn't exist when it should and it should also display an error message
     if (id(s"$elementIdentifier").findAllElements.isEmpty) {
       return
     }
-    val dataEntryField = id(s"$elementIdentifier").findElement.get
+    val dataEntryField   = id(s"$elementIdentifier").findElement.get
     val errorBorderClass = "govuk-input--error"
     webDriverWillWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".govuk-error-summary")))
     expectedErrorMessage match {
       case None =>
         assertThat(errorMessage.findAllElements.isEmpty).isTrue
         assertThat(dataEntryField.attribute("class").get).doesNotContain(errorBorderClass)
-      case _ =>
+      case _    =>
         assertThat(errorMessage.findElement.get.isDisplayed).isTrue
         assertThat(errorMessage.findElement.get.text).isEqualTo(s"Error:\n${expectedErrorMessage.get}")
         if (elementIdentifier == "countryCode") {
@@ -68,7 +68,7 @@ trait CommonAssertions extends BrowserDriver {
     expectedErrorMessage match {
       case None =>
         assertThat(errorMessage.findAllElements.isEmpty).isTrue
-      case _ =>
+      case _    =>
         assertThat(errorMessage.findElement.get.isDisplayed).isTrue
         assertThat(errorMessage.findElement.get.text).isEqualTo(s"Error:\n${expectedErrorMessage.get}")
     }
@@ -79,11 +79,14 @@ trait CommonAssertions extends BrowserDriver {
     assertThat(errorSummaryCount).isEqualTo(expectedErrorCount)
   }
 
-  def checkErrorMessages(lineOneError: Option[String] = None,
-                         townError: Option[String] = None,
-                         postCodeError: Option[String] = None,
-                         countryError: Option[String] = None): Unit = {
-    val expectedErrors = Map("line1" -> lineOneError, "town" -> townError, "postcode" -> postCodeError, "countryCode" -> countryError)
+  def checkErrorMessages(
+    lineOneError: Option[String] = None,
+    townError: Option[String] = None,
+    postCodeError: Option[String] = None,
+    countryError: Option[String] = None
+  ): Unit = {
+    val expectedErrors =
+      Map("line1" -> lineOneError, "town" -> townError, "postcode" -> postCodeError, "countryCode" -> countryError)
     expectedErrors.foreach { case (elementIdentifier, expectedError) =>
       assertErrorSummaryLink(elementIdentifier, expectedError)
       assertErrorMessage(elementIdentifier, expectedError)

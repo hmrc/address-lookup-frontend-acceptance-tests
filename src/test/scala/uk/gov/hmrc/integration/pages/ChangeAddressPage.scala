@@ -20,7 +20,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions.titleIs
 
 case class ChangeAddressPage() extends BasePage {
 
-  override def isOnPage(ukMode: Boolean = false): Boolean = {
+  override def isOnPage(ukMode: Boolean = false): Boolean =
     webDriverWillWait.until(titleIs("Enter your address"))
-  }
 }

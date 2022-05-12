@@ -28,12 +28,14 @@ class AddressConfirmationSpec extends BaseSpec {
     go to initializeJourney()
     AddressLookUpPage().isOnPage()
 
-    AddressLookUpPage().enterPostcode(MULTIPLE_MATCHES.address.postcode)
+    AddressLookUpPage()
+      .enterPostcode(MULTIPLE_MATCHES.address.postcode)
       .clickFindAddress()
 
     assert(ChooseAddressPage().isOnPage(), "Select Address page was not displayed")
 
-    ChooseAddressPage().selectAddress(MULTIPLE_MATCHES.address.lines.head)
+    ChooseAddressPage()
+      .selectAddress(MULTIPLE_MATCHES.address.lines.head)
       .clickContinue()
     assert(ConfirmAddressPage().isOnPage(), "Confirm Address page was not displayed")
 
@@ -46,16 +48,18 @@ class AddressConfirmationSpec extends BaseSpec {
   Scenario("Confirm address") {
     Given("Given I am on the address confirmation page")
     val continueUrl = "http://localhost:9028/admin/metrics"
-    val onRampUrl = initializeJourney(JourneyConfig(2, JourneyOptions(continueUrl, ukMode = Some(true))).asJsonString())
+    val onRampUrl   = initializeJourney(JourneyConfig(2, JourneyOptions(continueUrl, ukMode = Some(true))).asJsonString())
     go to onRampUrl
     AddressLookUpPage().isOnPage()
 
-    AddressLookUpPage().enterPostcode(MULTIPLE_MATCHES.address.postcode)
+    AddressLookUpPage()
+      .enterPostcode(MULTIPLE_MATCHES.address.postcode)
       .clickFindAddress()
 
     assert(ChooseAddressPage().isOnPage(), "Select Address page was not displayed")
 
-    ChooseAddressPage().selectAddress(MULTIPLE_MATCHES.address.lines.head)
+    ChooseAddressPage()
+      .selectAddress(MULTIPLE_MATCHES.address.lines.head)
       .clickContinue()
     assert(ConfirmAddressPage().isOnPage(), "Confirm Address page was not displayed")
 
@@ -72,7 +76,8 @@ class AddressConfirmationSpec extends BaseSpec {
     AddressLookUpPage().isOnPage()
 
     And("I navigate to the Address Confirmation page")
-    AddressLookUpPage().enterPostcode(ONE_MATCH.address.postcode)
+    AddressLookUpPage()
+      .enterPostcode(ONE_MATCH.address.postcode)
       .clickFindAddress()
 
     When("I click on the change address link")
@@ -87,12 +92,14 @@ class AddressConfirmationSpec extends BaseSpec {
     go to initializeJourney()
     AddressLookUpPage().isOnPage()
 
-    AddressLookUpPage().enterPostcode(MULTIPLE_MATCHES.address.postcode)
+    AddressLookUpPage()
+      .enterPostcode(MULTIPLE_MATCHES.address.postcode)
       .clickFindAddress()
 
     assert(ChooseAddressPage().isOnPage(), "Select Address page was not displayed")
 
-    ChooseAddressPage().selectAddress(MULTIPLE_MATCHES.address.lines.head)
+    ChooseAddressPage()
+      .selectAddress(MULTIPLE_MATCHES.address.lines.head)
       .clickContinue()
     assert(ConfirmAddressPage().isOnPage(), "Confirm Address page was not displayed")
 
@@ -107,7 +114,8 @@ class AddressConfirmationSpec extends BaseSpec {
   Scenario("Confirm address page, click edit address and then go back") {
     Given("I am on the confirm address screen")
     go to initializeJourney()
-    AddressLookUpPage().enterPostcode(ONE_MATCH.address.postcode)
+    AddressLookUpPage()
+      .enterPostcode(ONE_MATCH.address.postcode)
       .clickFindAddress()
     assertThat(ConfirmAddressPage().isOnPage()).isTrue
 
@@ -135,12 +143,14 @@ class AddressConfirmationSpec extends BaseSpec {
     go to initializeJourney()
     AddressLookUpPage().isOnPage()
 
-    AddressLookUpPage().enterPostcode(MULTIPLE_MATCHES.address.postcode)
+    AddressLookUpPage()
+      .enterPostcode(MULTIPLE_MATCHES.address.postcode)
       .clickFindAddress()
 
     assert(ChooseAddressPage().isOnPage(), "Select Address page was not displayed")
 
-    ChooseAddressPage().selectAddress(MULTIPLE_MATCHES.address.lines.head)
+    ChooseAddressPage()
+      .selectAddress(MULTIPLE_MATCHES.address.lines.head)
       .clickContinue()
     assert(ConfirmAddressPage().isOnPage(), "Confirm Address page was not displayed")
 
@@ -148,7 +158,10 @@ class AddressConfirmationSpec extends BaseSpec {
     ConfirmAddressPage().changeAddress()
 
     Then("I should be taken to the Change address page")
-    assert(ChangeAddressPage().isOnPage(), "Change address page was not displayed after clicking on 'Search again' link")
+    assert(
+      ChangeAddressPage().isOnPage(),
+      "Change address page was not displayed after clicking on 'Search again' link"
+    )
   }
 
 }

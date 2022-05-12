@@ -25,8 +25,15 @@ class TimeoutSpec extends BaseSpec {
 
   Scenario("Timeout Dialogue links to relative link") {
     Given("I am on the Address Lookup page")
-    val timeoutRelativePath = "/test-only/v2/test-setup"
-    val configuration: String = JourneyConfig(2, JourneyOptions("None", ukMode = Some(true), timeoutConfig = Some(TimeoutConfig(120, s"/lookup-address$timeoutRelativePath")))).asJsonString()
+    val timeoutRelativePath   = "/test-only/v2/test-setup"
+    val configuration: String = JourneyConfig(
+      2,
+      JourneyOptions(
+        "None",
+        ukMode = Some(true),
+        timeoutConfig = Some(TimeoutConfig(120, s"/lookup-address$timeoutRelativePath"))
+      )
+    ).asJsonString()
     go to initializeJourney(configuration)
     assertThat(AddressLookUpPage().isOnPage()).isTrue
 
@@ -43,8 +50,9 @@ class TimeoutSpec extends BaseSpec {
 
       Given("I want to use an absolute timeout URL")
 
-      val timeoutURL = "http://www.google.co.uk"
-      val configuration: String = JourneyConfig(2, JourneyOptions("None", timeoutConfig = Some(TimeoutConfig(120, timeoutURL)))).asJsonString()
+      val timeoutURL            = "http://www.google.co.uk"
+      val configuration: String =
+        JourneyConfig(2, JourneyOptions("None", timeoutConfig = Some(TimeoutConfig(120, timeoutURL)))).asJsonString()
 
       When("I attempt to initialise a journey")
 
@@ -59,8 +67,11 @@ class TimeoutSpec extends BaseSpec {
   Scenario("Timeout Dialogue links to an absolute URL on allow list") {
     Given("I am on a Bank Account Verification Frontend page")
 
-    val timeoutURL = s"${TestConfig.url("address-lookup-frontend")}/test-only/v2/test-setup"
-    val configuration: String = JourneyConfig(2, JourneyOptions("None", ukMode = Some(true), timeoutConfig = Some(TimeoutConfig(120, timeoutURL)))).asJsonString()
+    val timeoutURL            = s"${TestConfig.url("address-lookup-frontend")}/test-only/v2/test-setup"
+    val configuration: String = JourneyConfig(
+      2,
+      JourneyOptions("None", ukMode = Some(true), timeoutConfig = Some(TimeoutConfig(120, timeoutURL)))
+    ).asJsonString()
     go to initializeJourney(configuration)
     assertThat(AddressLookUpPage().isOnPage()).isTrue
 
@@ -78,9 +89,16 @@ class TimeoutSpec extends BaseSpec {
 
       Given("I want to use an absolute timeout keep alive URL")
 
-      val timeoutRelativePath = "/test-only/v2/test-setup"
+      val timeoutRelativePath             = "/test-only/v2/test-setup"
       val timeoutKeepAliveUrlAbsolutePath = "http://www.google.co.uk"
-      val configuration: String = JourneyConfig(2, JourneyOptions("None", timeoutConfig = Some(TimeoutConfig(120, s"/lookup-address$timeoutRelativePath", Some(timeoutKeepAliveUrlAbsolutePath))))).asJsonString()
+      val configuration: String           = JourneyConfig(
+        2,
+        JourneyOptions(
+          "None",
+          timeoutConfig =
+            Some(TimeoutConfig(120, s"/lookup-address$timeoutRelativePath", Some(timeoutKeepAliveUrlAbsolutePath)))
+        )
+      ).asJsonString()
 
       When("I attempt to initialise a journey")
 

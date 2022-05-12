@@ -18,13 +18,15 @@ package uk.gov.hmrc.integration.models.init
 
 import play.api.libs.json.{Format, Json}
 
-case class SelectPageLabels(title: Option[String] = None,
-                            heading: Option[String] = None,
-                            headingWithPostcode: Option[String] = None,
-                            proposalListLabel: Option[String] = None,
-                            submitLabel: Option[String] = None,
-                            searchAgainLinkText: Option[String] = None,
-                            editAddressLinkText: Option[String] = None)
+case class SelectPageLabels(
+  title: Option[String] = None,
+  heading: Option[String] = None,
+  headingWithPostcode: Option[String] = None,
+  proposalListLabel: Option[String] = None,
+  submitLabel: Option[String] = None,
+  searchAgainLinkText: Option[String] = None,
+  editAddressLinkText: Option[String] = None
+)
 
 object SelectPageLabels {
   implicit val format: Format[SelectPageLabels] = Json.format[SelectPageLabels]

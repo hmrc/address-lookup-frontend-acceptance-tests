@@ -19,17 +19,17 @@ package uk.gov.hmrc.integration.models.response
 import play.api.libs.json.{Json, Reads, Writes}
 
 case class NonUKAddress(
-                         id: String,
-                         number: Option[String] = None,
-                         street: Option[String] = None,
-                         unit: Option[String] = None,
-                         city: Option[String] = None,
-                         district: Option[String] = None,
-                         region: Option[String] = None,
-                         postcode: Option[String] = None
-                       )
+  id: String,
+  number: Option[String] = None,
+  street: Option[String] = None,
+  unit: Option[String] = None,
+  city: Option[String] = None,
+  district: Option[String] = None,
+  region: Option[String] = None,
+  postcode: Option[String] = None
+)
 
 object NonUKAddress {
-  implicit val reads: Reads[NonUKAddress] = Json.reads[NonUKAddress]
+  implicit val reads: Reads[NonUKAddress]   = Json.reads[NonUKAddress]
   implicit val writes: Writes[NonUKAddress] = Json.writes[NonUKAddress]
 }
