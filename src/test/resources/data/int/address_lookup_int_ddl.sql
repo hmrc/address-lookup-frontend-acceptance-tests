@@ -13,14 +13,14 @@ CREATE TABLE __schema__.bm
     district              TEXT,
     region                TEXT,
     postcode              TEXT,
-    address_lookup_ft_col TSVECTOR
+    nonuk_address_lookup_ft_col TSVECTOR
 );
 
 DROP FUNCTION IF EXISTS address_lookup_int_vector_insert() CASCADE;
 CREATE FUNCTION address_lookup_int_vector_insert() RETURNS TRIGGER AS $$
 BEGIN
     IF TG_OP = 'INSERT' THEN
-        new.address_lookup_ft_col = to_tsvector('english'::regconfig, array_to_string(
+        new.nonuk_address_lookup_ft_col = to_tsvector('english'::regconfig, array_to_string(
                 ARRAY [
                     NULLIF(replace(btrim((NEW.number)::text), '""', ''), ''),
                     NULLIF(replace(btrim((NEW.street)::text), '""', ''), ''),
@@ -39,8 +39,8 @@ $$ LANGUAGE 'plpgsql';
 CREATE TRIGGER alintvectorinsert BEFORE INSERT ON __schema__.bm
     FOR EACH ROW EXECUTE PROCEDURE address_lookup_int_vector_insert();
 
-CREATE INDEX IF NOT EXISTS address_lookup_ft_col_idx
-    ON __schema__.bm USING gin (address_lookup_ft_col);
+CREATE INDEX IF NOT EXISTS nonuk_address_lookup_ft_col
+    ON __schema__.bm USING gin (nonuk_address_lookup_ft_col);
 
 DROP VIEW IF EXISTS public.bm;
 -- CREATE VIEW public.bm AS SELECT * FROM __schema__.bm;
@@ -57,5 +57,5 @@ SELECT uid,
        district,
        region,
        postcode,
-       address_lookup_ft_col
+       nonuk_address_lookup_ft_col
 FROM __schema__.bm;
