@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,21 @@ class AddressLookUpSpec extends BaseSpec {
 
   info("In order to ensure users find the canonical record of their address from the address-lookup service.")
   info("ALF will provide an address search form")
+
+  Feature("Country Lookup page") {
+    Scenario("Country name is not duplicated in the country picker") {
+      Given("I am on the country selection screen")
+      val startPage = initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
+      go to startPage
+
+      When("I have entered a valid country name in the country picker")
+      CountrySelectorPage()
+        .typeCountryName("France")
+
+      Then("the country name is not displayed twice in the picker")
+      assert(CountrySelectorPage().getSelectableCountriesCount() == 1)
+    }
+  }
 
   Feature("Address Lookup page") {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,18 +26,27 @@ case class CountrySelectorPage() extends BasePage {
   lazy val countrySelectionField: SingleSel  = singleSel(id("countryCode-select"))
   lazy val countryField: Option[Element]     = find(id("countryCode"))
   lazy val countryAutoCompleteField: IdQuery = id("countryCode__option--0")
+  lazy val countryCodeLists: CssSelectorQuery = cssSelector("#countryCode__listbox li")
 
   override def isOnPage(ukMode: Boolean = false): Boolean =
     webDriverWillWait.until(titleIs("Select your country"))
 
   def selectCountry(country: String): CountrySelectorPage = {
+    typeCountryName(country)
+    action.sendKeys(Keys.TAB).perform()
+    this
+  }
+
+  def typeCountryName(country: String): CountrySelectorPage = {
     countryField.get.underlying.click()
     action.sendKeys(Keys.DELETE).perform()
     countryField.get.underlying.sendKeys(country)
-    action.sendKeys(Keys.TAB).perform()
     this
   }
 
   def clickNext(): Unit =
     click on nextButton.get
+
+  def getSelectableCountriesCount(): Int =
+    findAll(countryCodeLists).size
 }
