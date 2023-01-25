@@ -36,7 +36,7 @@ class AddressLookUpSpec extends BaseSpec {
       CountrySelectorPage()
         .typeCountryName("France")
 
-      Then("the country name is not displayed twice in the picker")
+      Then("the country name is not duplicated in the picker")
       assert(CountrySelectorPage().getSelectableCountriesCount() == 1)
     }
   }
