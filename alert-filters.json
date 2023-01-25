@@ -21,6 +21,14 @@
       "url": "http:\/\/localhost:9028\/admin\/metrics.*",
       "ruleId": 10062,
       "urlIsRegex": "true"
+    },
+    {
+      "reason": "Do not pass sensitive information in URIs",
+      "contextId": 1,
+      "url": "http:\/\/localhost:9028\/lookup-address.*",
+      "ruleId": 10024,
+      "urlIsRegex": "true",
+      "newLevel": 1
     }
   ]
 }
