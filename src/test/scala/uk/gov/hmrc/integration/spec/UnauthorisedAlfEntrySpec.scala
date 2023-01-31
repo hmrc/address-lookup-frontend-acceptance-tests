@@ -33,7 +33,7 @@ class UnauthorisedAlfEntrySpec extends BaseSpec {
 
     Scenario("User cannot navigate to select address page if they have not initialised a journey") {
       Given("Given I navigate to the Address Confirmation page")
-      go to s"${TestConfig.url("address-lookup-frontend")}/9e7a7626-93dd-470a-8bdd-4032b0e02d1f/select?csrfToken=aea2c35e8006e11d4e510aa422aa9bd4c419f8fd-1490615036748-93630bfca3310bf6d3a90afc&filter=&postcode=AA00+0AA"
+      go to s"${TestConfig.url("address-lookup-frontend")}/9e7a7626-93dd-470a-8bdd-4032b0e02d1f/select?postcode=AA00+0AA"
 
       Then("I should see a No Journey page")
       assertThat(currentUrl).isEqualTo(s"${TestConfig.url("address-lookup-frontend")}/no-journey")
