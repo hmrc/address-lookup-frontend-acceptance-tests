@@ -13,9 +13,9 @@ object Dependencies {
     "com.typesafe"         % "config"            % "1.4.2"    % Test,
     "org.mock-server"      % "mockserver-netty"  % "5.12.0"   % Test,
     "org.assertj"          % "assertj-core"      % "3.22.0"   % Test,
-    "org.tpolecat"        %% "doobie-core"       % "0.7.1"    % Test,
-    "org.tpolecat"        %% "doobie-postgres"   % "0.7.1"    % Test,
-    "org.tpolecat"        %% "doobie-scalatest"  % "0.7.1"    % Test,
+    "org.tpolecat"        %% "doobie-core"       % "0.13.4"   % Test,
+    "org.tpolecat"        %% "doobie-postgres"   % "0.13.4"   % Test,
+    "org.tpolecat"        %% "doobie-scalatest"  % "0.13.4"   % Test,
     "uk.gov.hmrc"         %% "address-lookup"    % "4.+"      % Test
   )
 }
