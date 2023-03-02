@@ -34,10 +34,10 @@ To start services locally, run the following:
             "-J-Dauditing.consumer.baseUri.port=6001",
             "-J-Dauditing.consumer.baseUri.host=localhost",
             "-J-Dauditing.enabled=true",
-            "-J-Daddress-lookup-rds.enabled=true", 
-            "-J-Daddress-lookup-rds.url=jdbc:postgresql://localhost:5432/",
-            "-J-Daddress-lookup-rds.username=postgres",
-            "-J-Daddress-lookup-rds.password=postgres"
+            "-J-Dcip-address-lookup-rds.enabled=true", 
+            "-J-Dcip-address-lookup-rds.url=jdbc:postgresql://localhost:5432/",
+            "-J-Dcip-address-lookup-rds.username=postgres",
+            "-J-Dcip-address-lookup-rds.password=postgres"
         ]
     }'
 
