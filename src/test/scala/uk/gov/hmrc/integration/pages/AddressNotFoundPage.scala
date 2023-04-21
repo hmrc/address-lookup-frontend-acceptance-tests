@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.integration.pages
 
-import org.openqa.selenium.support.ui.ExpectedConditions.titleIs
+import org.openqa.selenium.support.ui.ExpectedConditions.titleContains
 
 case class AddressNotFoundPage() extends BasePage {
 
@@ -26,7 +26,7 @@ case class AddressNotFoundPage() extends BasePage {
   private lazy val tryDifferentPostcodeButton: IdQuery = id("continue")
 
   override def isOnPage(ukMode: Boolean = false): Boolean =
-    webDriverWillWait.until(titleIs("We cannot find any addresses"))
+    webDriverWillWait.until(titleContains("We cannot find any addresses"))
 
   def tryADifferentPostcode(): Unit =
     click on tryDifferentPostcodeButton
