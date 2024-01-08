@@ -29,7 +29,7 @@ class AddressLookUpSpec extends BaseSpec {
   Feature("Country Lookup page") {
     Scenario("Country name is not duplicated in the country picker") {
       Given("I am on the country selection screen")
-      val startPage = initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
+      val startPage = journeyBuilder.initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
       go to startPage
 
       When("I have entered a valid country name in the country picker")
@@ -45,7 +45,7 @@ class AddressLookUpSpec extends BaseSpec {
 
     Scenario("Access ALF - journey with address lookup page") {
       Given("an initialized ALF journey where the configured journey begins with an address lookup")
-      go to initializeJourney()
+      go to journeyBuilder.initializeJourney()
 
       When("the client application directs the user to the On Ramp url")
       Then("the address lookup form is displayed")
@@ -54,7 +54,7 @@ class AddressLookUpSpec extends BaseSpec {
 
     Scenario("Access ALF - Field validation") {
       Given("an initialized ALF journey where the configured journey begins with an address lookup")
-      go to initializeJourney()
+      go to journeyBuilder.initializeJourney()
       assert(AddressLookUpPage().isOnPage(), "Address Lookup page was not displayed")
 
       When("I do not enter a postcode and submit")
@@ -71,8 +71,8 @@ class AddressLookUpSpec extends BaseSpec {
 
     Scenario("Address search - postcode only") {
       Given("I am on the address lookup form")
-      val startPage = initializeJourney()
-      val clientId  = getClientID(startPage)
+      val startPage = journeyBuilder.initializeJourney()
+      val clientId  = journeyBuilder.getClientID(startPage)
       go to startPage
       assert(AddressLookUpPage().isOnPage())
 
@@ -89,7 +89,7 @@ class AddressLookUpSpec extends BaseSpec {
       ChooseAddressPage().clickContinue()
       ConfirmAddressPage().confirmAddress()
 
-      val confirmedAddress = getConfirmedAddress(clientId)
+      val confirmedAddress = journeyBuilder.getConfirmedAddress(clientId)
 
       assertThat(confirmedAddress.auditRef).isEqualTo(clientId)
       assertThat(confirmedAddress.id.get).isEqualTo(MULTIPLE_MATCHES.id)
@@ -98,8 +98,8 @@ class AddressLookUpSpec extends BaseSpec {
 
     Scenario("Address search - Organisation") {
       Given("I am on the address lookup form")
-      val startPage = initializeJourney()
-      val clientId  = getClientID(startPage)
+      val startPage = journeyBuilder.initializeJourney()
+      val clientId  = journeyBuilder.getClientID(startPage)
       go to startPage
       assert(AddressLookUpPage().isOnPage())
 
@@ -116,7 +116,7 @@ class AddressLookUpSpec extends BaseSpec {
       ChooseAddressPage().clickContinue()
       ConfirmAddressPage().confirmAddress()
 
-      val confirmedAddress = getConfirmedAddress(clientId)
+      val confirmedAddress = journeyBuilder.getConfirmedAddress(clientId)
 
       assertThat(confirmedAddress.auditRef).isEqualTo(clientId)
       assertThat(confirmedAddress.id.get).isEqualTo(ORGANISATION.id)
@@ -125,7 +125,7 @@ class AddressLookUpSpec extends BaseSpec {
 
     Scenario("Address search postcode and building name/number") {
       Given("I am on the address lookup form")
-      go to initializeJourney()
+      go to journeyBuilder.initializeJourney()
       assert(AddressLookUpPage().isOnPage())
 
       When("I search for an address using any postcode and a building name / number")
@@ -144,7 +144,7 @@ class AddressLookUpSpec extends BaseSpec {
       val postcode = "FX1 7RU"
 
       And("I am on the address lookup form")
-      go to initializeJourney()
+      go to journeyBuilder.initializeJourney()
       assert(AddressLookUpPage().isOnPage())
 
       When("I search for an address using the postcode with no addresses")
@@ -158,7 +158,7 @@ class AddressLookUpSpec extends BaseSpec {
 
     Scenario("Address search - Invalid postcode") {
       Given("I am on the address lookup form")
-      go to initializeJourney()
+      go to journeyBuilder.initializeJourney()
       assert(AddressLookUpPage().isOnPage())
 
       When("I search for an address using an invalid postcode")
@@ -185,7 +185,7 @@ class AddressLookUpSpec extends BaseSpec {
           selectPageConfig = Some(SelectPageConfig(proposalListLimit = Some(1)))
         )
       ).asJsonString()
-      go to initializeJourney(configuration)
+      go to journeyBuilder.initializeJourney(configuration)
       assert(AddressLookUpPage().isOnPage())
 
       When("I search for an address using the postcode with more than the configured address search results limit")
@@ -199,7 +199,7 @@ class AddressLookUpSpec extends BaseSpec {
 
     Scenario("Manual Address Entry") {
       Given("I am on the address lookup form")
-      go to initializeJourney()
+      go to journeyBuilder.initializeJourney()
       assert(AddressLookUpPage().isOnPage())
       AddressLookUpPage()
         .enterPostcode(NO_MATCHES.postcode)

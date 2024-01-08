@@ -25,7 +25,7 @@ class AccessibilitySpec extends BaseSpec {
 
   Scenario("Accessibility - Confirm UK (manual) address", Accessibility) {
     Given("I am on the Address Lookup page")
-    go to initializeJourney()
+    go to journeyBuilder.initializeJourney()
     AddressLookUpPage()
       .isOnPage()
 
@@ -47,7 +47,7 @@ class AccessibilitySpec extends BaseSpec {
   Scenario("Accessibility - Confirm non-UK (manual) address", Accessibility) {
     Given("I am on the Address Lookup page")
     val configuration: String = JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString()
-    go to initializeJourney(configuration)
+    go to journeyBuilder.initializeJourney(configuration)
     CountrySelectorPage()
       .isOnPage()
 
@@ -82,7 +82,7 @@ class AccessibilitySpec extends BaseSpec {
         selectPageConfig = Some(SelectPageConfig(proposalListLimit = Some(1)))
       )
     ).asJsonString()
-    go to initializeJourney(configuration)
+    go to journeyBuilder.initializeJourney(configuration)
     assert(AddressLookUpPage().isOnPage())
 
     When("I search for an address using the postcode with no addresses")
@@ -107,7 +107,7 @@ class AccessibilitySpec extends BaseSpec {
 
   Scenario("Accessibility - Error Summary", Accessibility) {
     Given("I am on the Address Lookup page")
-    go to initializeJourney()
+    go to journeyBuilder.initializeJourney()
     assert(AddressLookUpPage().isOnPage(), "Address Lookup page was not displayed")
 
     When("I do not specify a postcode for lookup")

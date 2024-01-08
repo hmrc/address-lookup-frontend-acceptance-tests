@@ -16,42 +16,47 @@
 
 package uk.gov.hmrc.integration.utils
 
-import okhttp3._
 import play.api.libs.json._
 import uk.gov.hmrc.integration.config.TestConfig
 import uk.gov.hmrc.integration.models.confirmed.ConfirmedAddress
 import uk.gov.hmrc.integration.models.init.{JourneyConfig, JourneyOptions}
 
-import java.util.concurrent.TimeUnit.SECONDS
+import java.net.URL
+import scala.concurrent.Await
+import scala.concurrent.duration.DurationInt
 
-trait JourneyBuilder {
-
-  val httpClient: OkHttpClient = new OkHttpClient()
-    .newBuilder()
-    .connectTimeout(10L, SECONDS)
-    .readTimeout(10L, SECONDS)
-    .build()
+class JourneyBuilder extends HttpClient {
 
   val defaultConfiguration: String = JourneyConfig(2, JourneyOptions("None", ukMode = Some(true))).asJsonString()
 
+  object HeaderNames {
+    val xRequestId = "X-Request-ID"
+    val userAgent = "User-Agent"
+    val contentType = "Content-Type"
+  }
+
+  val applicationJson = "application/json"
+
   def initializeJourney(configuration: String = defaultConfiguration): String = {
-    val request  = new Request.Builder()
-      .url(s"${TestConfig.apiUrl("address-lookup-frontend")}/v2/init")
-      .method(
-        "POST",
-        RequestBody.create(MediaType.parse("application/json"), Json.toJson(configuration).asInstanceOf[JsString].value)
-      )
-    val response = httpClient.newCall(request.build()).execute()
-    if (response.isSuccessful) {
+    val response = Await.result(
+      post(
+        s"${TestConfig.apiUrl("address-lookup-frontend")}/v2/init",
+        configuration,
+        HeaderNames.contentType -> applicationJson
+      ),
+      10.seconds
+    )
+
+    if (response.status.toString.startsWith("2")) {
       //Return lookup screen URL
-      response.headers.get("Location")
+      response.headers.getOrElse("Location", Seq("")).head
     } else {
       throw new IllegalStateException("Unable to initialize a new journey!")
     }
   }
 
   def getClientID(onRampUrl: String): String =
-    HttpUrl.parse(onRampUrl).pathSegments().get(1)
+    new URL(onRampUrl).getPath.split("/").toSeq(2)
 
   def getOffRampUrl(onRampUrl: String, continueUrl: String): String = {
     val clientId = getClientID(onRampUrl)
@@ -59,10 +64,14 @@ trait JourneyBuilder {
   }
 
   def getConfirmedAddress(id: String): ConfirmedAddress = {
-    val request  = new Request.Builder()
-      .url(s"${TestConfig.apiUrl("address-lookup-frontend")}/confirmed?id=$id")
-      .method("GET", null)
-    val response = httpClient.newCall(request.build()).execute()
-    Json.parse(response.body.string()).as[ConfirmedAddress]
+    val response = Await.result(
+      get(s"${TestConfig.apiUrl("address-lookup-frontend")}/confirmed?id=$id"),
+      10.seconds
+    )
+
+    val payload = response.body
+    println(s"RESPONSE: $payload")
+
+    Json.parse(response.body).as[ConfirmedAddress]
   }
 }

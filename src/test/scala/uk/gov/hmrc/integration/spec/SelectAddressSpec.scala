@@ -26,7 +26,7 @@ class SelectAddressSpec extends BaseSpec {
 
     Scenario("Suggested addresses - Error Summary") {
       Given("I am on the suggested addresses screen")
-      go to initializeJourney()
+      go to journeyBuilder.initializeJourney()
 
       AddressLookUpPage()
         .enterPostcode(MULTIPLE_MATCHES.address.postcode)
@@ -57,7 +57,7 @@ class SelectAddressSpec extends BaseSpec {
 
     Scenario("TXMNT-645: Can choose manual entry when no addresses are found") {
       Given("I am on the address not found screen")
-      go to initializeJourney()
+      go to journeyBuilder.initializeJourney()
       AddressLookUpPage()
         .enterPostcode(NO_MATCHES.postcode)
         .clickFindAddress()
@@ -77,7 +77,7 @@ class SelectAddressSpec extends BaseSpec {
 
     Scenario("Can choose 'Try a different postcode' when no addresses are found") {
       Given("I am on the address not found screen")
-      go to initializeJourney()
+      go to journeyBuilder.initializeJourney()
       AddressLookUpPage()
         .enterPostcode(NO_MATCHES.postcode)
         .clickFindAddress()
@@ -92,7 +92,7 @@ class SelectAddressSpec extends BaseSpec {
 
     Scenario("TXMNT-721: Select address page - back link") {
       Given("I am on the suggested addresses screen")
-      go to initializeJourney()
+      go to journeyBuilder.initializeJourney()
       AddressLookUpPage()
         .enterPostcode(MULTIPLE_MATCHES.address.postcode)
         .clickFindAddress()
@@ -107,7 +107,7 @@ class SelectAddressSpec extends BaseSpec {
 
     Scenario("TXMNT-721 - Select address page, enter address manually, then go back") {
       Given("I am on the suggested addresses screen")
-      go to initializeJourney()
+      go to journeyBuilder.initializeJourney()
       AddressLookUpPage()
         .enterPostcode(MULTIPLE_MATCHES.address.postcode)
         .clickFindAddress()
