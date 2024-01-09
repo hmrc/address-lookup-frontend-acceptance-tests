@@ -34,7 +34,7 @@ class TimeoutSpec extends BaseSpec {
         timeoutConfig = Some(TimeoutConfig(120, s"/lookup-address$timeoutRelativePath"))
       )
     ).asJsonString()
-    go to initializeJourney(configuration)
+    go to journeyBuilder.initializeJourney(configuration)
     assertThat(AddressLookUpPage().isOnPage()).isTrue
 
     When("I see the timeout dialogue")
@@ -56,7 +56,7 @@ class TimeoutSpec extends BaseSpec {
 
       When("I attempt to initialise a journey")
 
-      initializeJourney(configuration)
+      journeyBuilder.initializeJourney(configuration)
     }
 
     Then("An error is thrown")
@@ -72,7 +72,7 @@ class TimeoutSpec extends BaseSpec {
       2,
       JourneyOptions("None", ukMode = Some(true), timeoutConfig = Some(TimeoutConfig(120, timeoutURL)))
     ).asJsonString()
-    go to initializeJourney(configuration)
+    go to journeyBuilder.initializeJourney(configuration)
     assertThat(AddressLookUpPage().isOnPage()).isTrue
 
     When("I see the timeout dialogue")
@@ -102,7 +102,7 @@ class TimeoutSpec extends BaseSpec {
 
       When("I attempt to initialise a journey")
 
-      initializeJourney(configuration)
+      journeyBuilder.initializeJourney(configuration)
     }
 
     Then("An error is thrown")

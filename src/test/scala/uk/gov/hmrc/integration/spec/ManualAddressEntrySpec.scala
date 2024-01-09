@@ -41,8 +41,8 @@ class ManualAddressEntrySpec extends BaseSpec {
 
     Scenario("Can submit a manually entered UK address") {
       Given("I have manually entered a valid UK address")
-      val startPage = initializeJourney()
-      val clientId  = getClientID(startPage)
+      val startPage = journeyBuilder.initializeJourney()
+      val clientId  = journeyBuilder.getClientID(startPage)
       go to startPage
       AddressLookUpPage().clickManualEntry()
       EditAddressPage()
@@ -57,7 +57,7 @@ class ManualAddressEntrySpec extends BaseSpec {
 
       Then("The calling service is able to collect the address I confirmed via an API call")
 
-      val confirmedAddress = getConfirmedAddress(clientId)
+      val confirmedAddress = journeyBuilder.getConfirmedAddress(clientId)
 
       assertThat(confirmedAddress.auditRef).isEqualTo(clientId)
       assertThat(confirmedAddress.id).isEqualTo(None)
@@ -66,8 +66,8 @@ class ManualAddressEntrySpec extends BaseSpec {
 
     Scenario("Can submit a manually entered UK address with an Organisation Name") {
       Given("I have manually entered a valid UK address with an Organisation Name")
-      val startPage = initializeJourney()
-      val clientId  = getClientID(startPage)
+      val startPage = journeyBuilder.initializeJourney()
+      val clientId  = journeyBuilder.getClientID(startPage)
       go to startPage
       AddressLookUpPage().clickManualEntry()
       EditAddressPage()
@@ -83,7 +83,7 @@ class ManualAddressEntrySpec extends BaseSpec {
 
       Then("The calling service is able to collect the address I confirmed via an API call")
 
-      val confirmedAddress = getConfirmedAddress(clientId)
+      val confirmedAddress = journeyBuilder.getConfirmedAddress(clientId)
 
       assertThat(confirmedAddress.auditRef).isEqualTo(clientId)
       assertThat(confirmedAddress.id).isEqualTo(None)
@@ -92,8 +92,8 @@ class ManualAddressEntrySpec extends BaseSpec {
 
     Scenario("Can submit a manually entered international address") {
       Given("I have manually entered a valid international address")
-      val startPage = initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
-      val clientId  = getClientID(startPage)
+      val startPage = journeyBuilder.initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
+      val clientId  = journeyBuilder.getClientID(startPage)
       go to startPage
       CountrySelectorPage()
         .selectCountry(INT_ADDRESS.country.name)
@@ -110,7 +110,7 @@ class ManualAddressEntrySpec extends BaseSpec {
 
       Then("The calling service is able to collect the address I confirmed via an API call")
 
-      val confirmedAddress = getConfirmedAddress(clientId)
+      val confirmedAddress = journeyBuilder.getConfirmedAddress(clientId)
 
       assertThat(confirmedAddress.auditRef).isEqualTo(clientId)
       assertThat(confirmedAddress.id).isEqualTo(None)
@@ -119,7 +119,7 @@ class ManualAddressEntrySpec extends BaseSpec {
 
     Scenario("Check manual address entry page defaults - International mode") {
       Given("I have any non-UK address")
-      go to initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
+      go to journeyBuilder.initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
 
       When("I go to the manual entry page")
       CountrySelectorPage()
@@ -145,7 +145,7 @@ class ManualAddressEntrySpec extends BaseSpec {
 
     Scenario("Check manual address entry page defaults - UK mode") {
       Given("I have a UK address but no postcode")
-      go to initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(true))).asJsonString())
+      go to journeyBuilder.initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(true))).asJsonString())
 
       When("I go to the manual entry page")
       AddressLookUpPage().clickManualEntry()
@@ -168,8 +168,8 @@ class ManualAddressEntrySpec extends BaseSpec {
 
     Scenario("Can submit a manually entered UK address in International mode") {
       Given("I have manually entered a valid UK address")
-      val startPage = initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
-      val clientId  = getClientID(startPage)
+      val startPage = journeyBuilder.initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
+      val clientId  = journeyBuilder.getClientID(startPage)
       go to startPage
       When("I go to the manual entry page")
       CountrySelectorPage()
@@ -189,7 +189,7 @@ class ManualAddressEntrySpec extends BaseSpec {
 
       Then("The calling service is able to collect the address I confirmed via an API call")
 
-      val confirmedAddress = getConfirmedAddress(clientId)
+      val confirmedAddress = journeyBuilder.getConfirmedAddress(clientId)
 
       assertThat(confirmedAddress.auditRef).isEqualTo(clientId)
       assertThat(confirmedAddress.id).isEqualTo(None)
@@ -198,7 +198,7 @@ class ManualAddressEntrySpec extends BaseSpec {
 
     Scenario("Can change country after manually entering an international address") {
       Given("I have manually entered a valid international address")
-      val startPage = initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
+      val startPage = journeyBuilder.initializeJourney(JourneyConfig(2, JourneyOptions("None", ukMode = Some(false))).asJsonString())
       go to startPage
       CountrySelectorPage()
         .selectCountry(INT_ADDRESS.country.name)
@@ -231,7 +231,7 @@ class ManualAddressEntrySpec extends BaseSpec {
 
     Scenario("Manual address - Error Summary") {
       Given("I am on the Address Lookup page")
-      go to initializeJourney()
+      go to journeyBuilder.initializeJourney()
       AddressLookUpPage().clickManualEntry()
 
       When("I do not submit the required Edit Address fields")
@@ -249,7 +249,7 @@ class ManualAddressEntrySpec extends BaseSpec {
 
     Scenario("Field Validation: Max characters for required fields") {
       Given("I am on the Address Lookup page")
-      go to initializeJourney()
+      go to journeyBuilder.initializeJourney()
       AddressLookUpPage().clickManualEntry()
 
       When("I do not submit the required Edit Address fields")

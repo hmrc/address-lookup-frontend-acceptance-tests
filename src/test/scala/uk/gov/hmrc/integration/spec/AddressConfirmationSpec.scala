@@ -25,7 +25,7 @@ class AddressConfirmationSpec extends BaseSpec {
 
   Scenario("Selected address is displayed on confirmation page") {
     Given("Given I am on the address confirmation page")
-    go to initializeJourney()
+    go to journeyBuilder.initializeJourney()
     AddressLookUpPage().isOnPage()
 
     AddressLookUpPage()
@@ -48,7 +48,7 @@ class AddressConfirmationSpec extends BaseSpec {
   Scenario("Confirm address") {
     Given("Given I am on the address confirmation page")
     val continueUrl = "http://localhost:9028/admin/metrics"
-    val onRampUrl   = initializeJourney(JourneyConfig(2, JourneyOptions(continueUrl, ukMode = Some(true))).asJsonString())
+    val onRampUrl   = journeyBuilder.initializeJourney(JourneyConfig(2, JourneyOptions(continueUrl, ukMode = Some(true))).asJsonString())
     go to onRampUrl
     AddressLookUpPage().isOnPage()
 
@@ -67,12 +67,12 @@ class AddressConfirmationSpec extends BaseSpec {
     ConfirmAddressPage().confirmAddress()
 
     Then("I am taken to the Off Ramp url from the frontend client app")
-    assert(currentUrl == getOffRampUrl(onRampUrl, continueUrl))
+    assert(currentUrl == journeyBuilder.getOffRampUrl(onRampUrl, continueUrl))
   }
 
   Scenario("Initialized journey navigates directly to confirm page should be able to search and select an address") {
     Given("I have an initialized ALF Journey")
-    go to initializeJourney()
+    go to journeyBuilder.initializeJourney()
     AddressLookUpPage().isOnPage()
 
     And("I navigate to the Address Confirmation page")
@@ -89,7 +89,7 @@ class AddressConfirmationSpec extends BaseSpec {
 
   Scenario("Address Confirmation - back link") {
     Given("I am on the Address Confirmation page")
-    go to initializeJourney()
+    go to journeyBuilder.initializeJourney()
     AddressLookUpPage().isOnPage()
 
     AddressLookUpPage()
@@ -113,7 +113,7 @@ class AddressConfirmationSpec extends BaseSpec {
   //TODO this scenario is really a confirm page check, should probably move into AddressConfirmationSpec
   Scenario("Confirm address page, click edit address and then go back") {
     Given("I am on the confirm address screen")
-    go to initializeJourney()
+    go to journeyBuilder.initializeJourney()
     AddressLookUpPage()
       .enterPostcode(ONE_MATCH.address.postcode)
       .clickFindAddress()
@@ -140,7 +140,7 @@ class AddressConfirmationSpec extends BaseSpec {
 
   Scenario("Search again") {
     Given("I am on the Address Confirmation page")
-    go to initializeJourney()
+    go to journeyBuilder.initializeJourney()
     AddressLookUpPage().isOnPage()
 
     AddressLookUpPage()

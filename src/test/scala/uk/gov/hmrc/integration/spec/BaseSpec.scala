@@ -30,9 +30,10 @@ trait BaseSpec
     with BeforeAndAfterAll
     with BeforeAndAfterEach
     with BrowserDriver
-    with JourneyBuilder
     with CommonAssertions
     with Matchers {
+
+  val journeyBuilder = new JourneyBuilder
 
   override def beforeAll(): Unit = {
     super.beforeAll()
